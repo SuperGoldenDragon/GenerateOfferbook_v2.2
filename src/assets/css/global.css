@@ -1,0 +1,72 @@
+
+.brands-container li a {
+  text-decoration: none;
+}
+
+.offer-actions-bar a {
+  text-decoration: none;
+}
+
+.offer-actions-bar a:hover {
+  text-decoration: underline;
+}
+
+.item-block .item-img {
+  width: 100%;
+  padding-top: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  border: 1px solid gray;
+}
+
+.item-block input.form-control {
+  border: 0;
+  border-radius: 0;
+  border-bottom: 1px solid gray;
+  outline: 0;
+}
+
+.item-block input.form-control:focus {
+  box-shadow: none;
+}
+
+.goods-image-wrapper {
+  position: relative;
+}
+
+.goods-image-wrapper img.goods-image {
+  opacity: 1;
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: .1s ease;
+}
+
+.main-image-checked {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  text-align: center;
+  color: white;
+}
+
+.goods-image-wrapper:hover .goods-image {
+  opacity: 0.7;
+  cursor: pointer;
+}
+
+.main-image-checked i {
+  font-size: 36px;
+}
+
+.main-image-border {
+  outline: 2px solid white;
+  outline-offset: -2px;
+}
+
+.hidden-item-filename {
+  display: none;
+}
