@@ -298,6 +298,9 @@ const Offerbook = (function () {
   return {
     init: function () {
       bindBaseEvents();
+    },
+    getOffer: function (id) {
+      return offers[id];
     }
   }
 }());
@@ -323,9 +326,16 @@ const onDragAllow = (e, targetBlock) => {
 const onDrop = (e, obj) => {
   e.preventDefault();
   $(obj).removeClass("item-dragover");
-
   const sourceId = e.dataTransfer.getData("id");
   $(obj).before($('.item-block[data-itemid="' + sourceId + '"]'));
+  const arr = sourceId.split("_");
+  const brandId = arr[1];
+  const brandIndex = $(`li[data-brandid="${brandId}"]`).data('brandindex');
+  const offer = Offerbook.getOffer(arr[0]);
+
+  $(`div[data-brandid="${brandId}"] .item-blocks-container .item-block`).each((index, node) => {
+    $(node).find('input.item-number').val(`${offer.prefix}-${brandIndex}-${index + 1}`);
+  });
 };
 
 const onDragLeave = (e, obj) => {
