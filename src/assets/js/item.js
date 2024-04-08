@@ -32,7 +32,7 @@ Item.prototype.init = function () {
                             </div>\
                             <div class="d-flex justify-content-end mt-3">\
                                 <a href="javascript:" class="me-3" data-bs-toggle="modal" data-bs-target="#edit-current-item">View detail</a>\
-                                <a href="javascript:" class="">Delete</a>\
+                                <a href="javascript:" class="delete-item">Delete</a>\
                             </div>\
                           </div>\
                       </div>');
@@ -94,6 +94,13 @@ Item.prototype.init = function () {
       ItemRelatives().itemChecking(e);
     });
   });
+
+  /*Edit Part*/
+  $(`[data-itemid="${self.id}"] .delete-item`).on('click', function () {
+    $(this).parent().parent().parent().remove();
+    const itemIndex = $('div[data-brandid="' + self.brandId + '"] .item-blocks-container div.item-block').length + 1;
+  });
+  /*Edit Part*/
 
   newItemBlock.find("input.item-number").on("change", function () {
     const e = new CustomEvent("itemchange", { detail: { offerId: self.offerId, brandId: self.brandId, itemId: self.id } });
