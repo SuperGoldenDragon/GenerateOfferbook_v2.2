@@ -12,31 +12,31 @@ const Offerbook = (function () {
   let offers = {};
   let filenames = [];
 
-  const bindBaseEvents = function() {
-    inputNewOffername.on("input", function() {
+  const bindBaseEvents = function () {
+    inputNewOffername.on("input", function () {
       const offername = $(this).val();
-      btnCreateOffer.prop("disabled", offername.length?false:true);      
+      btnCreateOffer.prop("disabled", offername.length ? false : true);
     });
 
-    inputNewOffername.on("keypress", function(e) {
+    inputNewOffername.on("keypress", function (e) {
       var keycode = e.keycode || e.charCode;
-      if(keycode == 13 && e.target.value) {
+      if (keycode == 13 && e.target.value) {
         btnCreateOffer.click();
       }
     });
 
-    btnCreateOffer.on("click", function() {
+    btnCreateOffer.on("click", function () {
       const offername = inputNewOffername.val();
-      if(!offername.length) {
+      if (!offername.length) {
         offername.focus();
-        return ;
+        return;
       }
       createNewOffer(offername);
       $('#create-new-offer [data-bs-dismiss="modal"]').click();
       inputNewOffername.val("");
     });
 
-    bntOpenOffer.on('click', function() {
+    bntOpenOffer.on('click', function () {
       try {
         electron.openOfferDialog();
       } catch (e) {
@@ -44,53 +44,53 @@ const Offerbook = (function () {
       }
     });
 
-    $('[data-bs-target="#create-new-offer"]').on("click", function() {
-      setTimeout(function() {
+    $('[data-bs-target="#create-new-offer"]').on("click", function () {
+      setTimeout(function () {
         inputNewOffername.focus();
       }, 500);
     });
 
     $('#btn-load-image').on('click', () => {
-			const dialogConfig = {
-				title : 'Select image files.',
-				buttonLabel: 'Select',
-				filters: [{
-					name: "Image files", extensions: ["jpg", "jpeg", "png"]
-				}],
-				properties: ['openFile', 'multiSelections']
-			};
-			electron.openDialog('showOpenDialogSync', dialogConfig);
-		});
+      const dialogConfig = {
+        title: 'Select image files.',
+        buttonLabel: 'Select',
+        filters: [{
+          name: "Image files", extensions: ["jpg", "jpeg", "png"]
+        }],
+        properties: ['openFile', 'multiSelections']
+      };
+      electron.openDialog('showOpenDialogSync', dialogConfig);
+    });
 
     try {
-      electron.onFilenames(function(params) {
+      electron.onFilenames(function (params) {
         const { offerId, brandId, mode, filenames } = params;
-        if(mode === "ITEM_IMAGE_MODE") {
+        if (mode === "ITEM_IMAGE_MODE") {
           const startIndex = Date.now();
-          filenames.forEach(function(filename, index) {
+          filenames.forEach(function (filename, index) {
             new Item(offerId, brandId, [filename], `${offerId}_${brandId}_${startIndex + index}`);
           });
         }
-        else if(mode === "ITEM_CHANGE_MODE"){
+        else if (mode === "ITEM_CHANGE_MODE") {
           let modalFileNames = [];
-          $('#edit-current-item div.hidden-filename').each(function() {
+          $('#edit-current-item div.hidden-filename').each(function () {
             modalFileNames.push($(this).data('filename'));
           });
 
           const changeImageContent = $('#edit-current-item .load-image-edit-content');
-          
+
           ItemRelatives().renderFromImages(filenames, changeImageContent, false);
           filenames.map((filename, index) => {
             return modalFileNames.push(filename);
           });
-          
+
           $('.load-image-edit-content .goods-image-wrapper').on('click', (e) => {
             ItemRelatives().itemChecking(e);
           });
 
           $('#edit-current-item .hidden-filename').remove();
 
-          modalFileNames.forEach(function(modalFileName) {
+          modalFileNames.forEach(function (modalFileName) {
             $('#edit-current-item .item-block').append('<div class="hidden-filename"></div>')
             $('#edit-current-item .item-block .hidden-filename:last').data('filename', modalFileName);
           });
@@ -99,22 +99,21 @@ const Offerbook = (function () {
 
       electron.saveFileNames(filenames => {
         filenames = filenames;
-        if(filenames.length > 0){
+        if (filenames.length > 0) {
           $('#btn-create-item').prop('disabled', false);
         }
-        
+
         const newImport = $('#create-new-item .item-block .hidden-create-item').length;
 
-        filenames.forEach(function(filename) {
+        filenames.forEach(function (filename) {
           $('#create-new-item .item-block').append(`<div class="hidden-create-item" data-create-item="${filename}"></div>`);
         });
 
 
-        if(newImport == 0)
-        {
+        if (newImport == 0) {
           ItemRelatives().renderFromImages(filenames, imgContent, true);
         }
-        else{
+        else {
           ItemRelatives().renderFromImages(filenames, imgContent, false);
         }
 
@@ -125,7 +124,7 @@ const Offerbook = (function () {
 
       });
 
-      $('#btn-create-item').on('click', function() {
+      $('#btn-create-item').on('click', function () {
         const goods_number = $('input[name="goods-number"]').val();
         const goods_symbol = $('input[name="goods-symbol"]').val();
         const goods_price = $('input[name="goods-price"]').val();
@@ -133,28 +132,27 @@ const Offerbook = (function () {
         const brandId = $('#current-brand-id').val();
         const imageCards = $('.load-image-content div[choosed-main-image]');
         let firstIndex;
-        imageCards.each(function(index, imageCard) {
-          if($(imageCard).attr('choosed-main-image') == "true")
-          {
+        imageCards.each(function (index, imageCard) {
+          if ($(imageCard).attr('choosed-main-image') == "true") {
             firstIndex = index;
             return;
           }
         });
         let filenames = [];
-        $('#create-new-item .item-block .hidden-create-item').each(function() {
+        $('#create-new-item .item-block .hidden-create-item').each(function () {
           filenames.push($(this).attr('data-create-item'));
         });
         let mainFileName = filenames[firstIndex];
         filenames.splice(firstIndex, 1);
         filenames.unshift(mainFileName);
         const id = `${offerId}_${brandId}_${Date.now()}`;
-        new Item(offerId,brandId,filenames, id, goods_symbol, goods_price, goods_number);
+        new Item(offerId, brandId, filenames, id, goods_symbol, goods_price, goods_number);
         $('#close-create-item-modal').click();
         offers[offerId] && offers[offerId].setModified(true);
       });
 
       electron.onPdfFileSave(result => {
-        if(result) {
+        if (result) {
           return $.toast({
             heading: 'Success.',
             text: 'Pdf file is saved successfully.',
@@ -165,7 +163,7 @@ const Offerbook = (function () {
       });
 
       electron.onDocFileSave(result => {
-        if(result) {
+        if (result) {
           return $.toast({
             heading: 'Success.',
             text: 'Doc file is saved successfully.',
@@ -175,19 +173,19 @@ const Offerbook = (function () {
         }
       });
 
-      electron.onObsSave(function(data, filename) {
-        if(!data) {
+      electron.onObsSave(function (data, filename) {
+        if (!data) {
           return $.toast({
             heading: 'Saving is error.',
             text: 'Offerbook script file saving is failed.',
             icon: 'error',
             position: 'top-right',
-          });          
+          });
         }
 
         const { id, name } = data;
-        if(!id) return;
-        if(offers[id]) {
+        if (!id) return;
+        if (offers[id]) {
           offersHeader.find('a[href="#' + id + '"]').html(name);
           offers[id].setModified(false);
           offers[id].setFilename(filename);
@@ -200,8 +198,8 @@ const Offerbook = (function () {
         }
       });
 
-      electron.onObsOpen(function(data, filename) {
-        if(!data) {
+      electron.onObsOpen(function (data, filename) {
+        if (!data) {
           return $.toast({
             heading: 'Opening Error',
             text: 'Opening offerbook script file  is failed.',
@@ -210,12 +208,12 @@ const Offerbook = (function () {
           });
         }
         const { id, name, brands, prefix } = data;
-        if($('#' + id).length) {
+        if ($('#' + id).length) {
           return alert("This offerbook is already opened.");
         }
         let openedOffer = new Offer(id, name, false);
         openedOffer.updatePrefix(prefix);
-        brands.forEach(function(brand) {
+        brands.forEach(function (brand) {
           openedOffer.addBrand(brand);
         });
         openedOffer.setFilename(filename);
@@ -229,7 +227,7 @@ const Offerbook = (function () {
       electron.loadImages(null, null, "ITEM_CHANGE_MODE");
     });
 
-    $('#btn-edit-item').on('click', function() {
+    $('#btn-edit-item').on('click', function () {
       const goods_number = $('input[name="goods-edit-number"]').val();
       const goods_symbol = $('input[name="goods-edit-symbol"]').val();
       const goods_price = $('input[name="goods-edit-price"]').val();
@@ -238,26 +236,25 @@ const Offerbook = (function () {
       const id = $('input[name="goods-edit-itemId"]').attr("value");
 
       let modalFileNames = [];
-      $('#edit-current-item div.hidden-filename').each(function() {
+      $('#edit-current-item div.hidden-filename').each(function () {
         modalFileNames.push($(this).data('filename'));
       });
       console.log(modalFileNames);
-      
+
       const imageCards = $('.load-image-edit-content div[choosed-main-image]');
       let firstIndex;
-      imageCards.each(function(index, imageCard) {
-        if($(imageCard).attr('choosed-main-image') == "true")
-        {
+      imageCards.each(function (index, imageCard) {
+        if ($(imageCard).attr('choosed-main-image') == "true") {
           firstIndex = index;
           return;
         }
       });
-      
+
 
       let mainFileName = modalFileNames[firstIndex];
       modalFileNames.splice(firstIndex, 1);
       modalFileNames.unshift(mainFileName);
-      
+
       const item = $(`[data-itemid="${id}"]`);
       item.find('input.item-number').val(goods_number);
       item.find('input.item-symbol').val(goods_symbol);
@@ -265,7 +262,7 @@ const Offerbook = (function () {
 
       item.find('div.hidden-item-filename').remove();
 
-      modalFileNames.forEach(function(modalFileName) {
+      modalFileNames.forEach(function (modalFileName) {
         item.append('<div class="hidden-item-filename"></div>');
         item.find('.hidden-item-filename:last').data('item-filename', modalFileName);
       });
@@ -274,7 +271,7 @@ const Offerbook = (function () {
       $('#close-edit-item-modal').click();
     });
 
-    $(document).on("itemchange", function(e) {
+    $(document).on("itemchange", function (e) {
       const { offerId } = e.detail;
       offers[offerId] && offers[offerId].setModified(true);
     });
@@ -285,10 +282,10 @@ const Offerbook = (function () {
    * @param {*} offername 
    * @returns 
    */
-  const createNewOffer = function(offername) {
-    if(!offername) {
+  const createNewOffer = function (offername) {
+    if (!offername) {
       $('#no-offer-alert').show();
-      return ;
+      return;
     }
     // if No offer alert is visible, toggle it
     $('#no-offer-alert').hide();
@@ -299,8 +296,11 @@ const Offerbook = (function () {
 
 
   return {
-    init : function() {
+    init: function () {
       bindBaseEvents();
+    },
+    getOffer: function (id) {
+      return offers[id];
     }
   }
 }());
@@ -308,3 +308,36 @@ const Offerbook = (function () {
 $(() => {
   Offerbook.init();
 });
+
+
+/**
+ * drag events
+ */
+
+const onDragStarter = e => {
+  e.dataTransfer.setData('id', $(e.target).parent().parent().data('itemid'));
+};
+
+const onDragAllow = (e, targetBlock) => {
+  e.preventDefault();
+  $(targetBlock).addClass("item-dragover");
+};
+
+const onDrop = (e, obj) => {
+  e.preventDefault();
+  $(obj).removeClass("item-dragover");
+  const sourceId = e.dataTransfer.getData("id");
+  $(obj).before($('.item-block[data-itemid="' + sourceId + '"]'));
+  const arr = sourceId.split("_");
+  const brandId = arr[1];
+  const brandIndex = $(`li[data-brandid="${brandId}"]`).data('brandindex');
+  const offer = Offerbook.getOffer(arr[0]);
+
+  $(`div[data-brandid="${brandId}"] .item-blocks-container .item-block`).each((index, node) => {
+    $(node).find('input.item-number').val(`${offer.prefix}-${brandIndex}-${index + 1}`);
+  });
+};
+
+const onDragLeave = (e, obj) => {
+  $(obj).removeClass("item-dragover");
+};

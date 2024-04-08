@@ -18,12 +18,12 @@ Item.prototype.init = function () {
   const offerPrefix = $('#' + self.offerId).data('prefix');
   // let newFileNames = [];
 
-  brandContainer.append('<div class="col-md-3 item-block mt-2" data-itemid="' + self.id + '">\
+  brandContainer.append('<div class="col-md-3 item-block mt-2" data-itemid="' + self.id + '" ondragover="javascript:onDragAllow(event, this)" ondrop="javascript:onDrop(event, this)" ondragleave="javascript:onDragLeave(event, this)">\
                           <div class="card p-2">\
                             <div class="form-group mb-2">\
                                 <input type="text" class="form-control text-center item-number">\
                             </div>\
-                            <div class="item-img"></div>\
+                            <div class="item-img" draggable="true" ondragstart="javascript:onDragStarter(event)"></div>\
                             <div class="form-group mt-2">\
                                 <input type="text" class="form-control item-symbol" placeholder="Symbol: ">\
                             </div>\

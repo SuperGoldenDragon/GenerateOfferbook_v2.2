@@ -1,4 +1,3 @@
-
 .brands-container li a {
   text-decoration: none;
 }
@@ -9,6 +8,10 @@
 
 .offer-actions-bar a:hover {
   text-decoration: underline;
+}
+
+.item-block.item-dragover {
+  border-left: 2px dashed gray;
 }
 
 .item-block .item-img {
