@@ -7,6 +7,13 @@ const offersHeader = $('#offer-tabs');
 const imgContent = $('.load-image-content');
 const bntOpenOffer = $('.btn-open-offer');
 
+offersContainer.append('<div id="no-offer-alert">\
+                          <div class="w3-panel w3-deep-purple">\
+                            <h3>No offers.</h3>\
+                            <p>No offers are opened and created. Please <a href="javascript:" class="w3-text-blue" data-bs-toggle="modal" data-bs-target="#create-new-offer">create</a> a new offer or <a href="javascript:" class="w3-text-blue btn-open-offer">open</a> exist offers.</p>\
+                          </div>\
+                        </div>');
+
 const Offerbook = (function () {
 
   let offers = {};

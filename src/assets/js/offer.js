@@ -13,8 +13,8 @@ const Offer = function (id, offername, isModified = true) {
 }
 
 Offer.prototype.init = function () {
-
   const self = this;
+  $('#no-offer-alert').hide();
 
   offersHeader.append('<li class="nav-item">\
                               <a class="nav-link" data-bs-toggle="tab" href="#' + self.id + '" data-offername="' + self.offername + '" data-offerid="' + self.id + '">' + self.offername + (self.isModified ? " *" : "") + '</a>\

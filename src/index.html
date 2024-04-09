@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" data-bs-theme="dark">
+
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,12 +12,15 @@
 	<link rel="stylesheet" href="assets/css/global.css">
 	<title>Offerbook 2.1</title>
 </head>
+
 <body class="py-3">
 	<div class="container-fluid">
 		<div class="d-flex justify-content-between">
 			<div>
-				<button class="w3-btn w3-ripple w3-blue w3-round-large w3-small"  data-bs-toggle="modal" data-bs-target="#create-new-offer">Create new offerbook</button>
-				<button class="w3-btn w3-ripple w3-indigo w3-round-large w3-small btn-open-offer">Open offerbook</button>
+				<button class="w3-btn w3-ripple w3-blue w3-round-large w3-small" data-bs-toggle="modal"
+					data-bs-target="#create-new-offer">Create new offerbook</button>
+				<button class="w3-btn w3-ripple w3-indigo w3-round-large w3-small btn-open-offer">Open
+					offerbook</button>
 			</div>
 			<div>
 				<button class="w3-btn w3-ripple w3-dark-gray w3-round-large w3-small">Close all offerbook</button>
@@ -27,12 +31,7 @@
 			</ul>
 			<!-- Tab panes -->
 			<div class="tab-content" id="offer-contents">
-				<div id="no-offer-alert">
-					<div class="w3-panel w3-deep-purple">
-						<h3>No offers.</h3>
-						<p>No offers are opened and created. Please <a href="javascript:" class="w3-text-blue" data-bs-toggle="modal" data-bs-target="#create-new-offer">create</a> a new offer or <a href="javascript:" class="w3-text-blue btn-open-offer">open</a> exist offers.</p>
-					</div>
-				</div>
+
 			</div>
 		</div>
 	</div>
@@ -55,8 +54,10 @@
 				</div>
 				<!-- Modal footer -->
 				<div class="modal-footer">
-					<button type="button" class="w3-btn w3-ripple w3-blue w3-round-large w3-small" id="btn_create_offer" disabled>Create</button>
-					<button type="button" class="w3-btn w3-ripple w3-dark-gray w3-round-large w3-small" data-bs-dismiss="modal">Close</button>
+					<button type="button" class="w3-btn w3-ripple w3-blue w3-round-large w3-small" id="btn_create_offer"
+						disabled>Create</button>
+					<button type="button" class="w3-btn w3-ripple w3-dark-gray w3-round-large w3-small"
+						data-bs-dismiss="modal">Close</button>
 				</div>
 			</div>
 		</div>
@@ -83,8 +84,10 @@
 				</div>
 				<!-- Modal footer -->
 				<div class="modal-footer">
-					<button type="button" class="w3-btn w3-ripple w3-blue w3-round-large w3-small" id="btn_save_offer_setting">Save</button>
-					<button type="button" class="w3-btn w3-ripple w3-dark-gray w3-round-large w3-small" data-bs-dismiss="modal">Close</button>
+					<button type="button" class="w3-btn w3-ripple w3-blue w3-round-large w3-small"
+						id="btn_save_offer_setting">Save</button>
+					<button type="button" class="w3-btn w3-ripple w3-dark-gray w3-round-large w3-small"
+						data-bs-dismiss="modal">Close</button>
 				</div>
 			</div>
 		</div>
@@ -104,12 +107,16 @@
 						<div class="d-flex">
 							<input type="text" hidden id="current-offer-id">
 							<input type="text" hidden id="current-brand-id">
-							<input type="text" class="form-control mx-1" placeholder="Number  ex : 1-1" name="goods-number">
-							<input type="text" class="form-control mx-1" placeholder="Symbol  ex : 2XL" name="goods-symbol">
-							<input type="text" class="form-control mx-1" placeholder="Price  ex : 10$" name="goods-price">
+							<input type="text" class="form-control mx-1" placeholder="Number  ex : 1-1"
+								name="goods-number">
+							<input type="text" class="form-control mx-1" placeholder="Symbol  ex : 2XL"
+								name="goods-symbol">
+							<input type="text" class="form-control mx-1" placeholder="Price  ex : 10$"
+								name="goods-price">
 						</div>
 						<div class="d-flex justify-content-center my-4">
-							<button type="button" class="w3-btn w3-ripple w3-indigo w3-round-large w3-small" id="btn-load-image">Load Images</button>
+							<button type="button" class="w3-btn w3-ripple w3-indigo w3-round-large w3-small"
+								id="btn-load-image">Load Images</button>
 						</div>
 						<div class="w3-row-padding w3-margin-top load-image-content">
 
@@ -118,8 +125,10 @@
 				</div>
 				<!-- Modal footer -->
 				<div class="modal-footer">
-					<button type="button" class="w3-btn w3-ripple w3-blue w3-round-large w3-small" id="btn-create-item" disabled>Create</button>
-					<button type="button" class="w3-btn w3-ripple w3-dark-gray w3-round-large w3-small" data-bs-dismiss="modal" id="close-create-item-modal">Close</button>
+					<button type="button" class="w3-btn w3-ripple w3-blue w3-round-large w3-small" id="btn-create-item"
+						disabled>Create</button>
+					<button type="button" class="w3-btn w3-ripple w3-dark-gray w3-round-large w3-small"
+						data-bs-dismiss="modal" id="close-create-item-modal">Close</button>
 				</div>
 			</div>
 		</div>
@@ -139,16 +148,20 @@
 						<div class="d-flex">
 							<input type="text" hidden id="current-offer-edit-id">
 							<input type="text" hidden id="current-brand-edit-id">
-							<input type="text" class="form-control mx-1" placeholder="Number  ex : 1-1" name="goods-edit-number">
-							<input type="text" class="form-control mx-1" placeholder="Symbol  ex : 2XL" name="goods-edit-symbol">
-							<input type="text" class="form-control mx-1" placeholder="Price  ex : 10$" name="goods-edit-price">
+							<input type="text" class="form-control mx-1" placeholder="Number  ex : 1-1"
+								name="goods-edit-number">
+							<input type="text" class="form-control mx-1" placeholder="Symbol  ex : 2XL"
+								name="goods-edit-symbol">
+							<input type="text" class="form-control mx-1" placeholder="Price  ex : 10$"
+								name="goods-edit-price">
 						</div>
 						<div class="d-flex justify-content-center my-4">
-							<button type="button" class="w3-btn w3-ripple w3-indigo w3-round-large w3-small" id="btn-change-image">Change Images</button>
+							<button type="button" class="w3-btn w3-ripple w3-indigo w3-round-large w3-small"
+								id="btn-change-image">Change Images</button>
 						</div>
-						<input type="text" name="goods-edit-itemId" value="" hidden/>
-						<input type="text" name="goods-edit-itemBrandId" value="" hidden/>
-						<input type="text" name="goods-edit-itemOfferId" value="" hidden/>
+						<input type="text" name="goods-edit-itemId" value="" hidden />
+						<input type="text" name="goods-edit-itemBrandId" value="" hidden />
+						<input type="text" name="goods-edit-itemOfferId" value="" hidden />
 						<div class="w3-row-padding w3-margin-top load-image-edit-content">
 
 						</div>
@@ -156,8 +169,10 @@
 				</div>
 				<!-- Modal footer -->
 				<div class="modal-footer">
-					<button type="button" class="w3-btn w3-ripple w3-blue w3-round-large w3-small" id="btn-edit-item" disabled>Save</button>
-					<button type="button" class="w3-btn w3-ripple w3-dark-gray w3-round-large w3-small" data-bs-dismiss="modal" id="close-edit-item-modal">Close</button>
+					<button type="button" class="w3-btn w3-ripple w3-blue w3-round-large w3-small" id="btn-edit-item"
+						disabled>Save</button>
+					<button type="button" class="w3-btn w3-ripple w3-dark-gray w3-round-large w3-small"
+						data-bs-dismiss="modal" id="close-edit-item-modal">Close</button>
 				</div>
 			</div>
 		</div>
@@ -172,4 +187,5 @@
 <script src="assets/js/brand.js"></script>
 <script src="assets/js/item.js"></script>
 <script src="assets/js/itemRelatives.js"></script>
+
 </html>
