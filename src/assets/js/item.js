@@ -96,9 +96,29 @@ Item.prototype.init = function () {
   });
 
   /*Edit Part*/
-  $(`[data-itemid="${self.id}"] .delete-item`).on('click', function () {
-    $(this).parent().parent().parent().remove();
-    const itemIndex = $('div[data-brandid="' + self.brandId + '"] .item-blocks-container div.item-block').length + 1;
+  $(`[data-itemid="${self.id}"] .delete-item`).on("click", function (e, obj) {
+    const thisItem = $(this).parent().parent().parent();
+    const thisItemId = thisItem.data('itemid');
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "Do you want to delete this item?",
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        thisItem.remove();
+        const arr = thisItemId.split("_");
+        const brandId = arr[1];
+        const offer = Offerbook.getOffer(arr[0]);
+        const brandIndex = $(`li[data-brandid="${brandId}"]`).data('brandindex');
+        $(`div[data-brandid="${brandId}"] .item-blocks-container .item-block`).each((index, node) => {
+          $(node).find('input.item-number').val(`${offer.prefix}-${brandIndex}-${index + 1}`);
+        });
+      }
+    });
   });
   /*Edit Part*/
 

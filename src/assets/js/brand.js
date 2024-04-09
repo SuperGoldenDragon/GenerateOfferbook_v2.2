@@ -1,5 +1,5 @@
 
-const Brand = function(offerId, brandName, brandId) {
+const Brand = function (offerId, brandName, brandId) {
   this.id = brandId || Date.now();
   this.offerId = offerId;
   this.brandName = brandName;
@@ -7,9 +7,9 @@ const Brand = function(offerId, brandName, brandId) {
   this.init();
 };
 
-Brand.prototype.init = function() {
+Brand.prototype.init = function () {
   const self = this;
-  if(self.offerContainer.find('[data-brandname="' + self.brandName + '"]').length) {
+  if (self.offerContainer.find('[data-brandname="' + self.brandName + '"]').length) {
     $.toast({
       heading: 'Error',
       text: 'This brand is already exist.',
@@ -28,8 +28,8 @@ Brand.prototype.init = function() {
                                                           <div>\
                                                             <span class="h1 me-4">' + self.brandName + '</span>\
                                                             <a href="javascript:" class="me-2 btn-import-item-images">Import new images</a>\
-                                                            <a href="javascript:" class="me-2">Delete all items</a>\
-                                                            <a href="javascript:" class="me-2">Delete this brand</a>\
+                                                            <a href="javascript:" class="me-2 delete-all-item">Delete all items</a>\
+                                                            <a href="javascript:" class="me-2 delete-this-brand">Delete this brand</a>\
                                                             <a href="javascript:" class="me-2">Change brand name</a>\
                                                           </div>\
                                                           <div>\
@@ -44,12 +44,12 @@ Brand.prototype.init = function() {
 
   self.offerContainer.find('.items-container div[data-brandid="' + self.id + '"]').hide();
 
-  self.offerContainer.find('li[data-brandid="' + self.id + '"] a').on("click", function() {
+  self.offerContainer.find('li[data-brandid="' + self.id + '"] a').on("click", function () {
     self.offerContainer.find('.items-container div[data-brandid]').hide();
     self.offerContainer.find('.items-container div[data-brandid="' + self.id + '"]').show();
   });
 
-  self.offerContainer.find('button[data-bs-target="#create-new-item"]').on('click', function(){
+  self.offerContainer.find('button[data-bs-target="#create-new-item"]').on('click', function () {
     $('input[name="goods-number"]').val("");
     $('input[name="goods-symbol"]').val("");
     $('input[name="goods-price"]').val("");
@@ -58,21 +58,62 @@ Brand.prototype.init = function() {
     $('#current-offer-id').val(self.offerId);
     $('#create-new-item .item-block .hidden-create-item').remove();
   });
-  
-  if(self.offerContainer.find('li[data-brandname]').length == 1) {
+
+  if (self.offerContainer.find('li[data-brandname]').length == 1) {
     self.offerContainer.find('li[data-brandid="' + self.id + '"] a').click();
   }
 
-  $('div[data-brandid="' + self.id + '"] a.btn-import-item-images').on("click", function() {
+  $('div[data-brandid="' + self.id + '"] a.btn-import-item-images').on("click", function () {
     try {
       electron.loadImages(self.offerId, self.id, "ITEM_IMAGE_MODE");
     } catch (e) {
       console.log("Load item images is failed. It is web mode.");
     }
   });
+  /*Edit Part*/
+  $('div[data-brandid="' + self.id + '"] a.delete-all-item').on("click", function () {
+    const ThisBrand = $(this).parent().parent().parent();
+    const Items = ThisBrand.children().eq(1).children().eq(0).children();
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "Do you want to delete all item?",
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Items.remove();
+      }
+    });
+  });
+
+  $('div[data-brandid="' + self.id + '"] a.delete-this-brand').on("click", function () {
+    const ThisBrand = $(this).parent().parent().parent();
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "Do you want to delete this brand?",
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const brandID = ThisBrand.data("brandid");
+        ThisBrand.remove();
+        $('li[data-brandid="' + brandID + '"]').remove();
+        var li_num = $('li[data-brandid]').length;
+        if (li_num == 0) {
+          self.offerContainer.find('.no-brand-alert').show();
+        }
+      }
+    });
+  });
+  /*Edit Part*/
 };
 
-Brand.prototype.addNewItems = function(items) {
-  
-};
+Brand.prototype.addNewItems = function (items) {
 
+};
