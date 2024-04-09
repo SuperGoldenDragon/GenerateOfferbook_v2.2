@@ -209,7 +209,12 @@ const Offerbook = (function () {
         }
         const { id, name, brands, prefix } = data;
         if ($('#' + id).length) {
-          return alert("This offerbook is already opened.");
+          return $.toast({
+            heading: 'Opening Warning',
+            text: 'This offerbook is already opened.',
+            icon: 'warning',
+            position: 'top-right',
+          });
         }
         let openedOffer = new Offer(id, name, false);
         openedOffer.updatePrefix(prefix);

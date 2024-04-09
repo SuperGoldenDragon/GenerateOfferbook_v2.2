@@ -17,7 +17,7 @@ function createWindow() {
       // contextIsolation: false,
       // enableRemoteModule: true,
       // nodeIntegrationInWorker: true,
-    }   
+    }
   });
 
   ipcMain.handle('dialog', (event, method, params) => {
@@ -41,7 +41,7 @@ function createWindow() {
       properties: ['openFile', 'multiSelections']
     };
     const filenames = dialog.showOpenDialogSync(win, config) || [];
-    e.sender.send('loaded_filenames', {...params, filenames});
+    e.sender.send('loaded_filenames', { ...params, filenames });
   });
 
   ipcMain.handle('save_pdf_dialog', (e, data) => {
@@ -60,12 +60,12 @@ function createWindow() {
 
   ipcMain.handle('save_doc_dialog', (e, data) => {
     const config = {
-      title : 'Select path for save.',
-      buttonLabel : 'Save',
-      properties : ['saveFile'],
+      title: 'Select path for save.',
+      buttonLabel: 'Save',
+      properties: ['saveFile'],
       filters: [
-        {name : "DOC file", extensions: ["docx", "doc"]},
-        {name : "All files", extensions : ["*"]}  
+        { name: "DOC file", extensions: ["docx", "doc"] },
+        { name: "All files", extensions: ["*"] }
       ]
     };
     const filename = dialog.showSaveDialogSync(config);
@@ -74,7 +74,7 @@ function createWindow() {
   });
 
   ipcMain.handle('save_offer_dialog', (e, data, filename) => {
-    if(!filename) {
+    if (!filename) {
       const config = {
         title: 'Select path for save.',
         buttonLabel: 'Save',
@@ -85,8 +85,8 @@ function createWindow() {
       };
       filename = dialog.showSaveDialogSync(config);
     }
-    if(!filename) return ;
-    e.sender.send("generated_obs", ObsModule.save(filename, data), filename); 
+    if (!filename) return;
+    e.sender.send("generated_obs", ObsModule.save(filename, data), filename);
   });
 
   ipcMain.handle("open_offer_dialog", (e) => {
@@ -99,7 +99,7 @@ function createWindow() {
       properties: ['openFile']
     };
     const filename = dialog.showOpenDialogSync(win, config)[0] || "";
-    if(!filename) return;
+    if (!filename) return;
     e.sender.send("obs_file_content", ObsModule.read(filename), filename);
   });
 };
@@ -113,7 +113,7 @@ const menutemplate = [
       },
       {
         label: "Save"
-      }, 
+      },
       {
         label: "Save As"
       },

@@ -1,9 +1,9 @@
-const {dialog} = require('electron');
+const { dialog } = require('electron');
 const fs = require('fs');
 
-const ObsModule = (function() {
+const ObsModule = (function () {
 
-  const save = function(filename, data) {
+  const save = function (filename, data) {
     let result = null;
     try {
       const { id, name } = data;
@@ -12,13 +12,13 @@ const ObsModule = (function() {
       result = { id, name };
     } catch (e) {
       console.log(e);
-    } 
+    }
     return result;
   };
 
-  const read = function(filename) {
+  const read = function (filename) {
     let file = null;
-    try { 
+    try {
       file = JSON.parse(fs.readFileSync(filename));
     } catch (e) {
       console.log(e);
