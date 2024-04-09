@@ -82,7 +82,9 @@ Offer.prototype.init = function () {
       confirmButtonText: 'Yes, delete all!'
     }).then((result) => {
       if (result.isConfirmed) {
+        newContainer.find('').each((index, node) => {
 
+        });
       }
     });
   });
@@ -165,7 +167,7 @@ Offer.prototype.init = function () {
     try {
       electron.saveDocDialog(self.getOfferData());
     } catch (e) {
-      console.log("Opening savedialog is failed. This is web mode.");
+      console.log("Opening save dialog is failed. This is web mode.");
     }
 
   });
