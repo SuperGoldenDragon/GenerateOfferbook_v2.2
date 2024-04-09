@@ -82,9 +82,6 @@ Offer.prototype.init = function () {
       confirmButtonText: 'Yes, delete all!'
     }).then((result) => {
       if (result.isConfirmed) {
-        newContainer.find('').each((index, node) => {
-
-        });
       }
     });
   });

@@ -6,6 +6,7 @@ const offersContainer = $('#offer-contents');
 const offersHeader = $('#offer-tabs');
 const imgContent = $('.load-image-content');
 const bntOpenOffer = $('.btn-open-offer');
+const btnCloseAllOffer = $('.btn-close-all-offers');
 
 offersContainer.append('<div id="no-offer-alert">\
                           <div class="w3-panel w3-deep-purple">\
@@ -49,6 +50,14 @@ const Offerbook = (function () {
       } catch (e) {
         console.log("Open offer dialog is failed. It is not electron mode.");
       }
+    });
+
+    btnCloseAllOffer.on('click', function () {
+      Object.keys(offers).forEach(offerId => {
+        if (!offers[offerId].isModified) {
+          offers[offerId].close();
+        }
+      });
     });
 
     $('[data-bs-target="#create-new-offer"]').on("click", function () {
