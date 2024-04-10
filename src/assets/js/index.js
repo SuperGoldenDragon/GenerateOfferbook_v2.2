@@ -68,6 +68,12 @@ const Offerbook = (function () {
       });
     });
 
+    /*Edit Part*/
+    $('a.btn-open-offer').on("click", function () {
+      $('button.btn-open-offer').click();
+    });
+    /*Edit Part*/
+
     $('[data-bs-target="#create-new-offer"]').on("click", function () {
       setTimeout(function () {
         inputNewOffername.focus();
