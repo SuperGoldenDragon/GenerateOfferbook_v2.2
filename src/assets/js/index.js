@@ -7,6 +7,8 @@ const offersHeader = $('#offer-tabs');
 const imgContent = $('.load-image-content');
 const bntOpenOffer = $('.btn-open-offer');
 const btnCloseAllOffer = $('.btn-close-all-offers');
+const editBrandName = $('#input_brand_name');
+const btnChangeBrandName = $('#btn_change_brandname');
 
 offersContainer.append('<div id="no-offer-alert">\
                           <div class="w3-panel w3-deep-purple">\
@@ -21,6 +23,12 @@ const Offerbook = (function () {
   let filenames = [];
 
   const bindBaseEvents = function () {
+
+    editBrandName.on("input", function () {
+      var val = $(this).val();
+      btnChangeBrandName.prop('disabled', !val.length);
+    });
+
     inputNewOffername.on("input", function () {
       const offername = $(this).val();
       btnCreateOffer.prop("disabled", offername.length ? false : true);
@@ -36,7 +44,7 @@ const Offerbook = (function () {
     btnCreateOffer.on("click", function () {
       const offername = inputNewOffername.val();
       if (!offername.length) {
-        offername.focus();
+        inputNewOffername.focus();
         return;
       }
       createNewOffer(offername);

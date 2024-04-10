@@ -69,6 +69,8 @@ Offer.prototype.init = function () {
   const newContainer = $('#' + self.id);
   const inputNewBrandName = newContainer.find('.new-brand-name');
   const btnCreateNewBrand = newContainer.find('.btn-create-new-brand');
+
+  /*Edit Part*/
   const btnDeleteAllBrands = newContainer.find('.btn-delete-all-brands');
 
   btnDeleteAllBrands.on("click", function () {
@@ -82,9 +84,13 @@ Offer.prototype.init = function () {
       confirmButtonText: 'Yes, delete all!'
     }).then((result) => {
       if (result.isConfirmed) {
+        offersContainer.find('div.items-container div[data-brandid]').remove();
+        offersContainer.find('div.items-container div.no-brand-alert').show();
+        offersContainer.find('div ul li').remove();
       }
     });
   });
+  /*Edit Part*/
 
   inputNewBrandName.on('input', function () {
     const value = $(this).val();

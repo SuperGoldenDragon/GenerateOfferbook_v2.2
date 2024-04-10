@@ -30,7 +30,7 @@ Brand.prototype.init = function () {
                                                             <a href="javascript:" class="me-2 btn-import-item-images">Import new images</a>\
                                                             <a href="javascript:" class="me-2 delete-all-item">Delete all items</a>\
                                                             <a href="javascript:" class="me-2 delete-this-brand">Delete this brand</a>\
-                                                            <a href="javascript:" class="me-2">Change brand name</a>\
+                                                            <a href="javascript:" class="me-2 " data-bs-toggle="modal" data-bs-target="#change-brand-name">Change brand name</a>\
                                                           </div>\
                                                           <div>\
                                                             <button class="w3-btn w3-ripple w3-teal w3-round-large btn-create-item" data-bs-toggle="modal" data-bs-target="#create-new-item">Create new item</button>\
@@ -70,6 +70,7 @@ Brand.prototype.init = function () {
       console.log("Load item images is failed. It is web mode.");
     }
   });
+
   /*Edit Part*/
   $('div[data-brandid="' + self.id + '"] a.delete-all-item').on("click", function () {
     const ThisBrand = $(this).parent().parent().parent();
@@ -111,9 +112,33 @@ Brand.prototype.init = function () {
       }
     });
   });
+
+  $('div[data-brandid="' + self.id + '"] a[data-bs-target="#change-brand-name"]').on("click", function () {
+    setTimeout(function () {
+      editBrandName.val(self.brandName);
+      editBrandName.focus();
+    }, 500);
+
+    btnChangeBrandName.off('click');
+    btnChangeBrandName.on("click", function () {
+      const updatedBrandName = editBrandName.val();
+      if (!updatedBrandName.length) return;
+      self.updateBrandName(updatedBrandName);
+      $('#change-brand-name button[data-bs-dismiss="modal"]').click();
+    });
+  });
   /*Edit Part*/
+
 };
 
 Brand.prototype.addNewItems = function (items) {
 
 };
+
+/*Edit Part*/
+Brand.prototype.updateBrandName = function (newName) {
+  this.brandName = newName;
+  $('li[data-brandid="' + this.id + '"] a').html(newName);
+  $('div[data-brandid="' + this.id + '"] div div span').html(newName);
+};
+/*Edit Part*/
