@@ -26,7 +26,7 @@ const ItemRelatives = function () {
                               </div>
                             </div>`);
         } else {
-          imageContent.append(`<div class="w3-third my-1" choosed-main-image="false">
+          imageContent.parent().children().eq(1).append(`<div class="w3-third my-1" choosed-main-image="false">
                                     <div class="w3-card">
                                       <div class="goods-image-wrapper mx-1">
                                         <img src="${filename}" class="goods-image">
