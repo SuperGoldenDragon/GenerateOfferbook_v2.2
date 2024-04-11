@@ -53,7 +53,8 @@ Brand.prototype.init = function () {
     $('input[name="goods-number"]').val("");
     $('input[name="goods-symbol"]').val("");
     $('input[name="goods-price"]').val("");
-    $('.load-image-content').empty();
+    $('.load-image-content .load-mainImage-content').empty();
+    $('.load-image-content .load-otherImages-content').empty();
     $('#current-brand-id').val(self.id);
     $('#current-offer-id').val(self.offerId);
     $('#create-new-item .item-block .hidden-create-item').remove();

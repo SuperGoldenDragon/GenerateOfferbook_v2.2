@@ -2,8 +2,10 @@ const ItemRelatives = function () {
   const itemChecking = function (e) {
     $('.main-image-checked').removeClass('d-block').addClass('d-none');
     $('.goods-image-wrapper').removeClass('main-image-border');
+    // $('.goods-image-wrapper').parent().parent().addClass('w3-third');
     $(e.target).siblings('div').removeClass('d-none').addClass('d-block');
     $(e.target).parent().addClass('main-image-border');
+    // $(e.target).parent().parent().parent().removeClass('w3-third');
     $('div[choosed-main-image]').attr('choosed-main-image', "false");
     $(e.target).parent().parent().parent().attr('choosed-main-image', "true");
   }
@@ -26,7 +28,7 @@ const ItemRelatives = function () {
         } else {
           imageContent.append(`<div class="w3-third my-1" choosed-main-image="false">
                                     <div class="w3-card">
-                                      <div class="goods-image-wrapper">
+                                      <div class="goods-image-wrapper mx-1">
                                         <img src="${filename}" class="goods-image">
                                         <div class="main-image-checked d-none">
                                           <i class="fa fa-check"></i>

@@ -5,6 +5,8 @@ const btnCreateOffer = $('#btn_create_offer');
 const offersContainer = $('#offer-contents');
 const offersHeader = $('#offer-tabs');
 const imgContent = $('.load-image-content');
+const mainImgContent = $('.load-image-content .load-mainImage-content');
+const otherImgContent = $('.load-image-content .load-otherImages-content');
 const bntOpenOffer = $('.btn-open-offer');
 const btnCloseAllOffer = $('.btn-close-all-offers');
 const editBrandName = $('#input_brand_name');
@@ -141,10 +143,10 @@ const Offerbook = (function () {
 
 
         if (newImport == 0) {
-          ItemRelatives().renderFromImages(filenames, imgContent, true);
+          ItemRelatives().renderFromImages(filenames, mainImgContent, true);
         }
         else {
-          ItemRelatives().renderFromImages(filenames, imgContent, false);
+          ItemRelatives().renderFromImages(filenames, otherImgContent, false);
         }
 
 
