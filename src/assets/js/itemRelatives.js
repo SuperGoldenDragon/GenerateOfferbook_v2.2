@@ -1,13 +1,10 @@
 const ItemRelatives = function () {
   const itemChecking = function (e) {
+    var mainImgSrc;
     $('.main-image-checked').removeClass('d-block').addClass('d-none');
-    $('.goods-image-wrapper').removeClass('main-image-border');
-    // $('.goods-image-wrapper').parent().parent().addClass('w3-third');
     $(e.target).siblings('div').removeClass('d-none').addClass('d-block');
-    $(e.target).parent().addClass('main-image-border');
-    // $(e.target).parent().parent().parent().removeClass('w3-third');
-    $('div[choosed-main-image]').attr('choosed-main-image', "false");
-    $(e.target).parent().parent().parent().attr('choosed-main-image', "true");
+    mainImgSrc = $(e.target).attr('src');
+    $('.main-image-border').children().eq(0).attr('src', mainImgSrc);
   }
 
   const renderFromImages = function (filenames, imageContent, createMode) {
@@ -19,36 +16,44 @@ const ItemRelatives = function () {
                               <div class="w3-card">
                                 <div class="goods-image-wrapper main-image-border">
                                   <img src="${filename}" class="goods-image">
-                                  <div class="main-image-checked d-block">
+                                </div>
+                              </div>
+                            </div>`);
+          imageContent.parent().children().eq(1).append(`<div class="w3-third my-1" choosed-main-image="false">
+          
+                                                          <div class="w3-card">
+                                                            <div class="goods-image-wrapper mx-1">
+                                                              <img src="${filename}" class="goods-image">
+                                                              <div class="main-image-checked d-none">
+                                                                <i class="fa fa-check"></i>
+                                                              </div>
+                                                            </div>
+                                                          </div>
+                                                        </div>`);
+        } else {
+          imageContent.parent().children().eq(1).append(`<div class="w3-third my-1" choosed-main-image="false">
+                                                          <div class="w3-card">
+                                                            <div class="goods-image-wrapper mx-1">
+                                                              <img src="${filename}" class="goods-image">
+                                                              <div class="main-image-checked d-none">
+                                                                <i class="fa fa-check"></i>
+                                                              </div>
+                                                            </div>
+                                                          </div>
+                                                        </div>`);
+        }
+      }
+      else {
+        imageContent.append(`<div class="w3-third my-1" choosed-main-image="false">
+                              <div class="w3-card">
+                                <div class="goods-image-wrapper">
+                                  <img src="${filename}" class="goods-image">
+                                  <div class="main-image-checked d-none">
                                     <i class="fa fa-check"></i>
                                   </div>
                                 </div>
                               </div>
                             </div>`);
-        } else {
-          imageContent.parent().children().eq(1).append(`<div class="w3-third my-1" choosed-main-image="false">
-                                    <div class="w3-card">
-                                      <div class="goods-image-wrapper mx-1">
-                                        <img src="${filename}" class="goods-image">
-                                        <div class="main-image-checked d-none">
-                                          <i class="fa fa-check"></i>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>`);
-        }
-      }
-      else {
-        imageContent.append(`<div class="w3-third my-1" choosed-main-image="false">
-                                    <div class="w3-card">
-                                      <div class="goods-image-wrapper">
-                                        <img src="${filename}" class="goods-image">
-                                        <div class="main-image-checked d-none">
-                                          <i class="fa fa-check"></i>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>`);
       }
     });
   }
