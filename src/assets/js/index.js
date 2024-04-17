@@ -162,7 +162,7 @@ const Offerbook = (function () {
         const goods_price = $('input[name="goods-price"]').val();
         const offerId = $('#current-offer-id').val();
         const brandId = $('#current-brand-id').val();
-        const imageCards = $('.load-image-content div[choosed-main-image]');
+        const imageCards = $('.load-image-content .load-otherImages-content div[choosed-main-image]');
         let firstIndex;
         imageCards.each(function (index, imageCard) {
           if ($(imageCard).attr('choosed-main-image') == "true") {
@@ -171,7 +171,7 @@ const Offerbook = (function () {
           }
         });
         let filenames = [];
-        $('#create-new-item .item-block .hidden-create-item').each(function () {
+        $('.item-block .hidden-create-item').each(function () {
           filenames.push($(this).attr('data-create-item'));
         });
         let mainFileName = filenames[firstIndex];

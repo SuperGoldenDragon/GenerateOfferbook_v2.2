@@ -2,9 +2,15 @@ const ItemRelatives = function () {
   const itemChecking = function (e) {
     var mainImgSrc;
     $('.main-image-checked').removeClass('d-block').addClass('d-none');
+    // $('.goods-image-wrapper').removeClass('main-image-border');
+    // $('.goods-image-wrapper').parent().parent().addClass('w3-third');
     $(e.target).siblings('div').removeClass('d-none').addClass('d-block');
     mainImgSrc = $(e.target).attr('src');
     $('.main-image-border').children().eq(0).attr('src', mainImgSrc);
+    // $(e.target).parent().addClass('main-image-border');
+    // $(e.target).parent().parent().parent().removeClass('w3-third');
+    $('div[choosed-main-image]').attr('choosed-main-image', "false");
+    $(e.target).parent().parent().parent().attr('choosed-main-image', "true");
   }
 
   const renderFromImages = function (filenames, imageContent, createMode) {
@@ -20,7 +26,6 @@ const ItemRelatives = function () {
                               </div>
                             </div>`);
           imageContent.parent().children().eq(1).append(`<div class="w3-third my-1" choosed-main-image="false">
-          
                                                           <div class="w3-card">
                                                             <div class="goods-image-wrapper mx-1">
                                                               <img src="${filename}" class="goods-image">
