@@ -123,7 +123,7 @@ const Offerbook = (function () {
           $('#edit-current-item .hidden-filename').remove();
 
           modalFileNames.forEach(function (modalFileName) {
-            $('#edit-current-item .item-block').append('<div class="hidden-filename"></div>')
+            $('#edit-current-item .item-block').append('<div class="hidden-filename"></div>');
             $('#edit-current-item .item-block .hidden-filename:last').data('filename', modalFileName);
           });
         }
