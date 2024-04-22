@@ -75,20 +75,27 @@ Item.prototype.init = function () {
       itemFileNames.push($(this).data('item-filename'));
     });
 
-    $('#edit-current-item .hidden-filename').remove();
-
     itemFileNames.forEach(function (itemFileName) {
-      $('#edit-current-item .item-block').append('<div class="hidden-filename"></div>')
+      $('#edit-current-item .item-block').append('<div class="hidden-filename"></div>');
       $('#edit-current-item .item-block .hidden-filename:last').data('filename', itemFileName);
     });
-
-    const changeImageContent = $('.load-image-edit-content');
-    changeImageContent.empty();
-
-
     $('#btn-edit-item').prop('disabled', false);
 
-    ItemRelatives().renderFromImages(itemFileNames, changeImageContent, true);
+    /*Edit Part*/
+    const changeImageContent = $('.load-image-edit-content');
+    changeImageContent.empty();
+    itemFileNames.forEach((filename, index) => {
+      filename = filename.replaceAll('\\', '\/');
+      changeImageContent.append(`<div class="my-1" choosed-main-image="true">
+                                    <div class="w3-card">
+                                      <div class="goods-image-wrapper main-image-border">
+                                        <img src="${filename}" class="goods-image">
+                                      </div>
+                                    </div>
+                                  </div>`);
+    });
+    // ItemRelatives().renderFromImages(itemFileNames, changeImageContent, true);
+    /*Edit Part*/
 
     $('.load-image-edit-content .goods-image-wrapper').on('click', (e) => {
       ItemRelatives().itemChecking(e);

@@ -110,8 +110,8 @@ const Offerbook = (function () {
           });
 
           const changeImageContent = $('#edit-current-item .load-image-edit-content');
-
           ItemRelatives().renderFromImages(filenames, changeImageContent, false);
+
           filenames.map((filename, index) => {
             return modalFileNames.push(filename);
           });
@@ -135,6 +135,8 @@ const Offerbook = (function () {
           $('#btn-create-item').prop('disabled', false);
         }
 
+        filenames.length = 3;
+
         const newImport = $('#create-new-item .item-block .hidden-create-item').length;
 
         filenames.forEach(function (filename) {
@@ -145,7 +147,8 @@ const Offerbook = (function () {
         if (newImport == 0) {
           ItemRelatives().renderFromImages(filenames, mainImgContent, true);
         }
-        else {
+        else if (newImport < 3) {
+          filenames.length = 3 - newImport;
           ItemRelatives().renderFromImages(filenames, otherImgContent, false);
         }
 
@@ -307,6 +310,19 @@ const Offerbook = (function () {
 
       $('#close-edit-item-modal').click();
     });
+
+    /*Edit Part*/
+    $('btn-select-item').on('click', function () {
+      var mainImgSrc;
+      mainImgSrc = $(this).parent().parent().find('img').attr('src');
+      console.log(mainImgSrc);
+      $('.main-image-border').children().eq(0).attr('src', mainImgSrc);
+    });
+
+    $('#close-edit-item-modal').on('click', function () {
+      $('#edit-current-item').find('div.hidden-filename').remove();
+    });
+    /*Edit Part*/
 
     $(document).on("itemchange", function (e) {
       const { offerId } = e.detail;
