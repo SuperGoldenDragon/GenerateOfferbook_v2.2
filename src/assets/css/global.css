@@ -34,17 +34,30 @@
   box-shadow: none;
 }
 
-.goods-image-wrapper {
-  position: relative;
+div.w3-third {
+  padding: 0.5%;
 }
 
-.goods-image-wrapper img.goods-image {
+.goods-image-wrapper {
+  position: relative;
+  opacity: 1;
+  display: block;
+  transition: .1s ease;
+  width: 100%;
+  padding-top: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  border: 1px solid gray;
+}
+
+/* .goods-image-wrapper img.goods-image {
   opacity: 1;
   display: block;
   width: 100%;
   height: auto;
   transition: .1s ease;
-}
+} */
 
 .main-image-checked {
   position: absolute;

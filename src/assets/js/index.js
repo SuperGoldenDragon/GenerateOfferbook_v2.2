@@ -166,7 +166,7 @@ const Offerbook = (function () {
         const offerId = $('#current-offer-id').val();
         const brandId = $('#current-brand-id').val();
         const imageCards = $('.load-image-content .load-otherImages-content div[choosed-main-image]');
-        let firstIndex;
+        let firstIndex = 0;
         imageCards.each(function (index, imageCard) {
           if ($(imageCard).attr('choosed-main-image') == "true") {
             firstIndex = index;
@@ -312,13 +312,6 @@ const Offerbook = (function () {
     });
 
     /*Edit Part*/
-    $('btn-select-item').on('click', function () {
-      var mainImgSrc;
-      mainImgSrc = $(this).parent().parent().find('img').attr('src');
-      console.log(mainImgSrc);
-      $('.main-image-border').children().eq(0).attr('src', mainImgSrc);
-    });
-
     $('#close-edit-item-modal').on('click', function () {
       $('#edit-current-item').find('div.hidden-filename').remove();
     });

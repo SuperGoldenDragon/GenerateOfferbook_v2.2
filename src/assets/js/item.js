@@ -86,13 +86,13 @@ Item.prototype.init = function () {
     changeImageContent.empty();
     itemFileNames.forEach((filename, index) => {
       filename = filename.replaceAll('\\', '\/');
-      changeImageContent.append(`<div class="my-1" choosed-main-image="true">
-                                    <div class="w3-card">
-                                      <div class="goods-image-wrapper main-image-border">
-                                        <img src="${filename}" class="goods-image">
-                                      </div>
-                                    </div>
-                                  </div>`);
+      // changeImageContent.append(`<div class="my-1" choosed-main-image="true">
+      //                               <div class="w3-card">
+      //                                 <div class="goods-image-wrapper main-image-border">
+      //                                   <img src="${filename}" class="goods-image">
+      //                                 </div>
+      //                               </div>
+      //                             </div>`);
     });
     // ItemRelatives().renderFromImages(itemFileNames, changeImageContent, true);
     /*Edit Part*/

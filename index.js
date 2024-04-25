@@ -25,6 +25,13 @@ function createWindow() {
     event.sender.send("file_names", filenames);
   });
 
+  ipcMain.handle('change_item_image', (event, method, params) => {
+    // console.log(method, params);
+    const filename = dialog[method](win, params)[0] || null;
+    if (!filename) return;
+    event.sender.send('change_item_image_filename', filename);
+  });
+
   win.loadURL(url.format({
     pathname: path.join(__dirname, 'src/index.html'),
     protocol: 'file:',
