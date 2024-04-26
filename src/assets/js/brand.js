@@ -78,12 +78,12 @@ Brand.prototype.init = function () {
     const Items = ThisBrand.children().eq(1).children().eq(0).children();
     Swal.fire({
       title: 'Are you sure?',
-      text: "Do you want to delete all item?",
+      text: "Do you want to delete all items?",
       icon: 'question',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes!'
+      confirmButtonText: 'Yes, delete all!'
     }).then((result) => {
       if (result.isConfirmed) {
         Items.remove();
@@ -100,7 +100,7 @@ Brand.prototype.init = function () {
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes!'
+      confirmButtonText: 'Yes, delete this!'
     }).then((result) => {
       if (result.isConfirmed) {
         const brandID = ThisBrand.data("brandid");

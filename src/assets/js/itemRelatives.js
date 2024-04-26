@@ -10,16 +10,12 @@ try {
     for (var i = 0; i < 3; i++) {
       ChangedData = ChangedImgDivs.eq(i).children().eq(0).children().eq(0).attr("data-src");
       if (ImgPath == ChangedData) {
-        Swal.fire({
-          title: 'Warnning!',
-          text: "This item is already loaded.",
-          icon: 'question',
-          showCancelButton: true,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
-          confirmButtonText: 'OK'
+        return $.toast({
+          heading: 'Warning',
+          text: 'This item is already loaded.',
+          icon: 'warning',
+          position: 'top-right',
         });
-        return;
       }
     }
     changedImg.css('background-image', "url(" + ImgPath + ")");

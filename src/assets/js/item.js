@@ -108,7 +108,7 @@ Item.prototype.init = function () {
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes!'
+      confirmButtonText: 'Yes, delete this!'
     }).then((result) => {
       if (result.isConfirmed) {
         thisItem.remove();
