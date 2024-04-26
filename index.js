@@ -26,7 +26,6 @@ function createWindow() {
   });
 
   ipcMain.handle('change_item_image', (event, method, params) => {
-    // console.log(method, params);
     const filename = dialog[method](win, params)[0] || null;
     if (!filename) return;
     event.sender.send('change_item_image_filename', filename);

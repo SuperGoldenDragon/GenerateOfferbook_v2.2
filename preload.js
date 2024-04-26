@@ -53,7 +53,6 @@ contextBridge.exposeInMainWorld('electron', {
     });
   },
   changeItemImage: config => {
-    // console.log(config);
     ipcRenderer.invoke('change_item_image', 'showOpenDialogSync', config);
   },
   onChangedItemFilename: (callback) => {

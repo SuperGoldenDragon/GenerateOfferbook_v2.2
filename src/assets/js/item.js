@@ -69,40 +69,35 @@ Item.prototype.init = function () {
     $('input[name="goods-edit-itemId"]').attr("value", self.id);
     $('input[name="goods-edit-itemOfferId"]').attr("value", self.offerId);
     $('input[name="goods-edit-itemBrandId"]').attr("value", self.brandId);
+    /*Editing Start*/
+    $('div.hidden-edit-item').remove();
+    $('div.load-image-edit-content div.load-mainImage-content').empty();
+    $('div.load-image-edit-content div.load-otherImages-content').empty();
+    /*Editing End*/
 
     let itemFileNames = [];
     $('[data-itemid="' + self.id + '"] .hidden-item-filename').each(function () {
       itemFileNames.push($(this).data('item-filename'));
     });
 
-    itemFileNames.forEach(function (itemFileName) {
-      $('#edit-current-item .item-block').append('<div class="hidden-filename"></div>');
-      $('#edit-current-item .item-block .hidden-filename:last').data('filename', itemFileName);
-    });
+    /*Editing Start*/
+    var filename = itemFileNames[0];
     $('#btn-edit-item').prop('disabled', false);
-
-    /*Edit Part*/
-    const changeImageContent = $('.load-image-edit-content');
-    changeImageContent.empty();
-    itemFileNames.forEach((filename, index) => {
-      filename = filename.replaceAll('\\', '\/');
-      // changeImageContent.append(`<div class="my-1" choosed-main-image="true">
-      //                               <div class="w3-card">
-      //                                 <div class="goods-image-wrapper main-image-border">
-      //                                   <img src="${filename}" class="goods-image">
-      //                                 </div>
-      //                               </div>
-      //                             </div>`);
-    });
-    // ItemRelatives().renderFromImages(itemFileNames, changeImageContent, true);
-    /*Edit Part*/
+    const changeImageContent = $('div.load-image-edit-content div.load-mainImage-content');
+    filename = filename.replaceAll('\\', '\/');
+    changeImageContent.append(`<div class="my-1">
+                                  <div class="w3-card">
+                                    <div class="goods-image-wrapper main-image-border" style="background-image: url('${filename}');" data-src="${filename}"></div>
+                                  </div>
+                                </div>`);
+    /*Editing End*/
 
     $('.load-image-edit-content .goods-image-wrapper').on('click', (e) => {
       ItemRelatives().itemChecking(e);
     });
   });
 
-  /*Edit Part*/
+  /*Editing Start*/
   $(`[data-itemid="${self.id}"] .delete-item`).on("click", function (e, obj) {
     const thisItem = $(this).parent().parent().parent();
     const thisItemId = thisItem.data('itemid');
@@ -127,7 +122,7 @@ Item.prototype.init = function () {
       }
     });
   });
-  /*Edit Part*/
+  /*Editing End*/
 
   newItemBlock.find("input.item-number").on("change", function () {
     const e = new CustomEvent("itemchange", { detail: { offerId: self.offerId, brandId: self.brandId, itemId: self.id } });

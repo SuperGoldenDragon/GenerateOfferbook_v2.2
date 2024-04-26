@@ -146,32 +146,32 @@
 
 				<!-- Modal body -->
 				<div class="modal-body">
-					<div class="item-block">
-						<div class="w3-row-padding w3-margin-top load-image-edit-content">
-							<div class="edit-main-image"></div>
-							<div class="edit-change-image"></div>
+					<div class="item-block row my-3">
+						<div class="w3-row-padding w3-margin-top load-image-edit-content col-sm-6">
+							<div class="load-mainImage-content">
+							</div>
+							<div class="load-otherImages-content">
+							</div>
 						</div>
-						<div class="d-flex">
+						<div class="justify-content-center col-sm-6">
 							<input type="text" hidden id="current-offer-edit-id">
 							<input type="text" hidden id="current-brand-edit-id">
-							<input type="text" class="form-control mx-1" placeholder="Number  ex : 1-1"
+							<input type="text" class="form-control m-3" placeholder="Number  ex : 1-1"
 								name="goods-edit-number">
-							<input type="text" class="form-control mx-1" placeholder="Symbol  ex : 2XL"
+							<input type="text" class="form-control m-3" placeholder="Symbol  ex : 2XL"
 								name="goods-edit-symbol">
-							<input type="text" class="form-control mx-1" placeholder="Price  ex : 10$"
+							<input type="text" class="form-control m-3" placeholder="Price  ex : 10$"
 								name="goods-edit-price">
 						</div>
 						<input type="text" name="goods-edit-itemId" value="" hidden />
 						<input type="text" name="goods-edit-itemBrandId" value="" hidden />
 						<input type="text" name="goods-edit-itemOfferId" value="" hidden />
-						<div class="d-flex justify-content-center my-4">
-							<button type="button" class="w3-btn w3-ripple w3-indigo w3-round-large w3-small"
-								id="btn-change-image">Change Images</button>
-						</div>
 					</div>
 				</div>
 				<!-- Modal footer -->
 				<div class="modal-footer">
+					<button type="button" class="w3-btn w3-ripple w3-indigo w3-round-large w3-small"
+						id="btn-change-image">Change Images</button>
 					<button type="button" class="w3-btn w3-ripple w3-blue w3-round-large w3-small" id="btn-edit-item"
 						disabled>Save</button>
 					<button type="button" class="w3-btn w3-ripple w3-dark-gray w3-round-large w3-small"
@@ -181,7 +181,7 @@
 		</div>
 	</div>
 
-	<!-- Edit Part -->
+	<!-- Editing Start -->
 	<div class="modal fade" id="change-brand-name">
 		<div class="modal-dialog ">
 			<div class="modal-content">
@@ -207,7 +207,7 @@
 			</div>
 		</div>
 	</div>
-	<!-- Edit Part -->
+	<!-- Editing End -->
 </body>
 <script src="../node_modules/jquery/dist/jquery.min.js"></script>
 <script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>

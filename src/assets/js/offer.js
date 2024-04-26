@@ -70,7 +70,7 @@ Offer.prototype.init = function () {
   const inputNewBrandName = newContainer.find('.new-brand-name');
   const btnCreateNewBrand = newContainer.find('.btn-create-new-brand');
 
-  /*Edit Part*/
+  /*Editing Start*/
   const btnDeleteAllBrands = newContainer.find('.btn-delete-all-brands');
 
   btnDeleteAllBrands.on("click", function () {
@@ -90,7 +90,7 @@ Offer.prototype.init = function () {
       }
     });
   });
-  /*Edit Part*/
+  /*Editing End*/
 
   inputNewBrandName.on('input', function () {
     const value = $(this).val();

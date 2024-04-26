@@ -72,7 +72,7 @@ Brand.prototype.init = function () {
     }
   });
 
-  /*Edit Part*/
+  /*Editing Start*/
   $('div[data-brandid="' + self.id + '"] a.delete-all-item').on("click", function () {
     const ThisBrand = $(this).parent().parent().parent();
     const Items = ThisBrand.children().eq(1).children().eq(0).children();
@@ -128,7 +128,7 @@ Brand.prototype.init = function () {
       $('#change-brand-name button[data-bs-dismiss="modal"]').click();
     });
   });
-  /*Edit Part*/
+  /*Editing End*/
 
 };
 
@@ -136,10 +136,10 @@ Brand.prototype.addNewItems = function (items) {
 
 };
 
-/*Edit Part*/
+/*Editing Start*/
 Brand.prototype.updateBrandName = function (newName) {
   this.brandName = newName;
   $('li[data-brandid="' + this.id + '"] a').html(newName);
   $('div[data-brandid="' + this.id + '"] div div span').html(newName);
 };
-/*Edit Part*/
+/*Editing End*/

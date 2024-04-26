@@ -1,10 +1,10 @@
-/*Edit Part*/
+/*Editing Start*/
 var selectedChangeImageItem = null;
 try {
   electron.onChangedItemFilename(filename => {
     var ImgPath = filename.replaceAll('\\', '\/');
     var changedImg = $(selectedChangeImageItem).find('.goods-image-wrapper');
-    var ChangedImgDivs = $(".load-otherImages-content ").children();
+    var ChangedImgDivs = $(".load-otherImages-content").children();
     var ChangedItemDatas = $("div[data-create-item]");
     var ChangedData = null;
     for (var i = 0; i < 3; i++) {
@@ -28,14 +28,18 @@ try {
       ChangedData = ChangedImgDivs.eq(i).children().eq(0).children().eq(0).attr("data-src");
       ChangedData = ChangedData.replaceAll('\/', '\\');
       ChangedItemDatas.eq(i).attr("data-create-item", ChangedData);
+      var EditItemDatas = $("div[data-edit-item]");
+      if (EditItemDatas.length > 0) {
+        EditItemDatas.eq(i + 1).attr("data-edit-item", ChangedData);
+      }
     }
   });
 } catch (e) { }
-/*Edit Part*/
+/*Editing End*/
+
 
 const ItemRelatives = function () {
-
-  /*Edit Part*/
+  /*Editing Start*/
   const itemChecking = function (e) {
     $('.main-image-checked').removeClass('d-block').addClass('d-none');
     $(e.target).siblings('div').removeClass('d-none').addClass('d-block');
@@ -55,7 +59,8 @@ const ItemRelatives = function () {
                                               <button  class="w3-blue w3-round-large btn-change-item">Change</button>
                                             </div>`);
     }
-    $('.load-mainImage-content').children().eq(0).children().eq(1).remove();
+    $('#create-new-item .load-mainImage-content').children().eq(0).children().eq(1).remove();
+    $('#edit-current-item .load-mainImage-content').children().eq(0).children().eq(1).remove();
 
     $('.btn-select-item').off("click");
     $('.btn-select-item').on('click', function () {
@@ -82,14 +87,13 @@ const ItemRelatives = function () {
       } catch (e) { }
     });
   }
-  /*Edit Part*/
 
   const renderFromImages = function (filenames, imageContent, createMode) {
     filenames.forEach((filename, index) => {
       filename = filename.replaceAll('\\', '\/');
       if (createMode) {
         if (index == 0) {
-          imageContent.append(`<div class="my-1" choosed-main-image="true">
+          imageContent.append(`<div class="my-1">
                               <div class="w3-card">
                                 <div class="goods-image-wrapper main-image-border" style="background-image: url('${filename}');" data-src="${filename}"></div>
                               </div>
@@ -119,6 +123,7 @@ const ItemRelatives = function () {
       }
     });
   }
+  /*Editing End*/
 
   return {
     itemChecking: function (e) {
