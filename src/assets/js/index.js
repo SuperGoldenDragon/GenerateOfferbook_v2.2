@@ -1,16 +1,19 @@
 // global vars
-
 const inputNewOffername = $('#new_offer_name');
 const btnCreateOffer = $('#btn_create_offer');
 const offersContainer = $('#offer-contents');
 const offersHeader = $('#offer-tabs');
 const imgContent = $('.load-image-content');
-const mainImgContent = $('.load-image-content .load-mainImage-content');
-const otherImgContent = $('.load-image-content .load-otherImages-content');
 const bntOpenOffer = $('.btn-open-offer');
 const btnCloseAllOffer = $('.btn-close-all-offers');
 const editBrandName = $('#input_brand_name');
 const btnChangeBrandName = $('#btn_change_brandname');
+/*Editing Start*/
+const mainImgContent = $('.load-image-content .load-mainImage-content');
+const otherImgContent = $('.load-image-content .load-otherImages-content');
+const mainEditImgContent = $('.load-image-edit-content .load-mainImage-content');
+const otherEditImgContent = $('.load-image-edit-content .load-otherImages-content');
+/*Editing End*/
 
 offersContainer.append('<div id="no-offer-alert">\
                           <div class="w3-panel w3-deep-purple">\
@@ -20,10 +23,7 @@ offersContainer.append('<div id="no-offer-alert">\
                         </div>');
 
 const Offerbook = (function () {
-
   let offers = {};
-  let filenames = [];
-
   const bindBaseEvents = function () {
 
     editBrandName.on("input", function () {
@@ -110,12 +110,23 @@ const Offerbook = (function () {
 
           const changeImageContent = $('#edit-current-item div.load-image-edit-content div.load-otherImages-content');
           /*Editing Start*/
-          const newImport = $('#edit-current-item .item-block .hidden-edit-item').length;
-          if (newImport == 0) {
+          /*Blocking : When reload the images, the old images are removed.*/
+          if (filenames.length == 0) {
+            return $.toast({
+              heading: 'Loading Error!',
+              text: 'The image is not selected.',
+              icon: 'warning',
+              position: 'top-right',
+            });
+          } else {
+            $('div.hidden-edit-item').remove();
+            $('div.load-image-edit-content div.load-otherImages-content').empty();
             filenames.length = 3;
-            ItemRelatives().renderFromImages(filenames, changeImageContent, false);
-          } else if (newImport < 3) {
-            filenames.length = 3 - newImport;
+            // const newImport = $('#edit-current-item .item-block .hidden-edit-item').length;
+            // if (newImport < 3) {
+            //   filenames.length = 3 - newImport;
+            //   ItemRelatives().renderFromImages(filenames, changeImageContent, false);
+            // }
             ItemRelatives().renderFromImages(filenames, changeImageContent, false);
           }
           /*Editing End*/
@@ -139,28 +150,39 @@ const Offerbook = (function () {
 
       electron.saveFileNames(filenames => {
         filenames = filenames;
+        /*Editing Start*/
+        /*Blocking : When reload the images, the old images are removed.*/
         if (filenames.length > 0) {
           $('#btn-create-item').prop('disabled', false);
+        } else {
+          return $.toast({
+            heading: 'Loading Error!',
+            text: 'The image is not selected.',
+            icon: 'warning',
+            position: 'top-right',
+          });
         }
-        /*Editing Start*/
+        $('div.load-mainImage-content').empty();
+        $('div.load-otherImages-content').empty();
+        $('div.hidden-create-item').remove();
+        $('div.hidden-edit-item').remove();
         filenames.length = 3;
-        const newImport = $('#create-new-item .item-block .hidden-create-item').length;
+        // const newImport = $('#create-new-item .item-block .hidden-create-item').length;
         filenames.forEach(function (filename) {
           $('#create-new-item .item-block').append(`<div class="hidden-create-item" data-create-item="${filename}"></div>`);
         });
-
-        if (newImport == 0) {
-          ItemRelatives().renderFromImages(filenames, mainImgContent, true);
-        } else if (newImport < 3) {
-          filenames.length = 3 - newImport;
-          ItemRelatives().renderFromImages(filenames, otherImgContent, false);
-        }
+        // if (newImport == 0) {
+        //   ItemRelatives().renderFromImages(filenames, mainImgContent, true);
+        // } else if (newImport < 3) {
+        //   filenames.length = 3 - newImport;
+        //   ItemRelatives().renderFromImages(filenames, otherImgContent, false);
+        // }
+        ItemRelatives().renderFromImages(filenames, mainImgContent, true);
         /*Editing End*/
 
         $('.load-image-content .goods-image-wrapper').on('click', (e) => {
           ItemRelatives().itemChecking(e);
         });
-
       });
 
       $('#btn-create-item').on('click', function () {

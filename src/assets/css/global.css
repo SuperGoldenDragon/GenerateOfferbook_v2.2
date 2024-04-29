@@ -99,10 +99,11 @@ div.w3-third {
   text-align: center;
   cursor: pointer;
   white-space: nowrap;
-
   font-size: 10px;
-  width: 100%;
-  margin: 1px;
+  /* width: 100%;
+  margin: 1px; */
+  width: 45%;
+  margin: 2%;
 }
 
 /* ------------------------- Dragon's account infos ---------------------------

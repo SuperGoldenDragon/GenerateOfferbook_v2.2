@@ -7,7 +7,8 @@ try {
     var ChangedImgDivs = $(".load-otherImages-content").children();
     var ChangedItemDatas = $("div[data-create-item]");
     var ChangedData = null;
-    for (var i = 0; i < 3; i++) {
+    var ImgNum = ChangedImgDivs.length;
+    for (var i = 0; i < ImgNum; i++) {
       ChangedData = ChangedImgDivs.eq(i).children().eq(0).children().eq(0).attr("data-src");
       if (ImgPath == ChangedData) {
         return $.toast({
@@ -20,7 +21,11 @@ try {
     }
     changedImg.css('background-image', "url(" + ImgPath + ")");
     changedImg.attr('data-src', ImgPath);
-    for (var i = 0; i < 3; i++) {
+    if (selectedChangeImageItem.attr("choosed-main-image") == "true") {
+      $('.load-mainImage-content .main-image-border').css('background-image', "url(" + ImgPath + ")");
+      $('.load-mainImage-content .main-image-border').attr('data-src', ImgPath);
+    }
+    for (var i = 0; i < ImgNum; i++) {
       ChangedData = ChangedImgDivs.eq(i).children().eq(0).children().eq(0).attr("data-src");
       ChangedData = ChangedData.replaceAll('\/', '\\');
       ChangedItemDatas.eq(i).attr("data-create-item", ChangedData);
@@ -36,39 +41,46 @@ try {
 
 const ItemRelatives = function () {
   /*Editing Start*/
+  /*Blocking : Buttons move to middle of images*/
   const itemChecking = function (e) {
     $('.main-image-checked').removeClass('d-block').addClass('d-none');
     $(e.target).siblings('div').removeClass('d-none').addClass('d-block');
     if ($('.btn_div').length > 0) {
-      if ($(e.target).parent().siblings('div').length > 0) {
+      // if ($(e.target).parent().siblings('div').length > 0) {
+      if ($(e.target).find('button').length > 0) {
         $('.btn_div').remove();
       } else {
         $('.btn_div').remove();
-        $(e.target).parent().parent().append(`<div class="btn_div d-flex justify-content-between m-1">
-                                              <button class="w3-green w3-round-large btn-select-item">Select</button>
-                                              <button  class="w3-blue w3-round-large btn-change-item">Change</button>
+        // $(e.target).parent().parent().append(`<div class="btn_div d-flex justify-content-between m-1">
+        $(e.target).append(`<div class="btn_div d-flex justify-content-between m-1">
+                                              <button class="w3-green w3-display-left w3-round-large btn-select-item">Select</button>
+                                              <button  class="w3-blue w3-display-right w3-round-large btn-change-item">Change</button>
                                             </div>`);
       }
     } else {
-      $(e.target).parent().parent().append(`<div class="btn_div d-flex justify-content-between m-1">
-                                              <button class="w3-green w3-round-large btn-select-item">Select</button>
-                                              <button  class="w3-blue w3-round-large btn-change-item">Change</button>
+      // $(e.target).parent().parent().append(`<div class="btn_div d-flex justify-content-between m-1">
+      $(e.target).append(`<div class="btn_div d-flex justify-content-between m-1">
+                                              <button class="w3-green w3-display-left w3-round-large btn-select-item">Select</button>
+                                              <button  class="w3-blue w3-display-right w3-round-large btn-change-item">Change</button>
                                             </div>`);
     }
-    $('#create-new-item .load-mainImage-content').children().eq(0).children().eq(1).remove();
-    $('#edit-current-item .load-mainImage-content').children().eq(0).children().eq(1).remove();
+    $('#create-new-item .load-mainImage-content').find('.btn_div').remove();
+    $('#edit-current-item .load-mainImage-content').find('.btn_div').remove();
 
     $('.btn-select-item').off("click");
     $('.btn-select-item').on('click', function () {
       $('div[choosed-main-image]').attr('choosed-main-image', "false");
-      $(this).parent().parent().attr('choosed-main-image', "true");
-      var mainImgSrc = $(this).parent().parent().find('.goods-image-wrapper').css('background-image');
+      // $(this).parent().parent().attr('choosed-main-image', "true");
+      // var mainImgSrc = $(this).parent().parent().find('.goods-image-wrapper').css('background-image');
+      $(this).parent().parent().parent().parent().attr('choosed-main-image', "true");
+      var mainImgSrc = $(this).parent().parent().parent().parent().find('.goods-image-wrapper').css('background-image');
       $('.main-image-border').css('background-image', mainImgSrc);
     });
 
     $('.btn-change-item').off("click");
     $('.btn-change-item').on("click", function () {
-      selectedChangeImageItem = $(this).parent().parent();
+      // selectedChangeImageItem = $(this).parent().parent();
+      selectedChangeImageItem = $(this).parent().parent().parent().parent();
       const dialogConfig = {
         title: 'Select image files.',
         buttonLabel: 'Select',
@@ -118,8 +130,8 @@ const ItemRelatives = function () {
                             </div>`);
       }
     });
+    /*Editing End*/
   }
-  /*Editing End*/
 
   return {
     itemChecking: function (e) {

@@ -50,14 +50,18 @@ Brand.prototype.init = function () {
   });
 
   self.offerContainer.find('button[data-bs-target="#create-new-item"]').on('click', function () {
+    /*Editing Start*/
+    $('#btn-create-item').prop('disabled', true);
+    $('div.load-mainImage-content').empty();
+    $('div.load-otherImages-content').empty();
+    $('div.hidden-create-item').remove();
+    $('div.hidden-edit-item').remove();
+    /*Editing End*/
     $('input[name="goods-number"]').val("");
     $('input[name="goods-symbol"]').val("");
     $('input[name="goods-price"]').val("");
-    $('.load-image-content .load-mainImage-content').empty();
-    $('.load-image-content .load-otherImages-content').empty();
     $('#current-brand-id').val(self.id);
     $('#current-offer-id').val(self.offerId);
-    $('#create-new-item .item-block .hidden-create-item').remove();
   });
 
   if (self.offerContainer.find('li[data-brandname]').length == 1) {

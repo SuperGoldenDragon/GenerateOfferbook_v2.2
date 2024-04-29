@@ -16,7 +16,6 @@ Item.prototype.init = function () {
   const brandIndex = $('li[data-brandid="' + self.brandId + '"]').data('brandindex');
   const itemIndex = $('div[data-brandid="' + self.brandId + '"] .item-blocks-container div.item-block').length + 1;
   const offerPrefix = $('#' + self.offerId).data('prefix');
-  // let newFileNames = [];
 
   brandContainer.append('<div class="col-md-3 item-block mt-2" data-itemid="' + self.id + '" ondragover="javascript:onDragAllow(event, this)" ondrop="javascript:onDrop(event, this)" ondragleave="javascript:onDragLeave(event, this)">\
                           <div class="card p-2">\
@@ -70,9 +69,10 @@ Item.prototype.init = function () {
     $('input[name="goods-edit-itemOfferId"]').attr("value", self.offerId);
     $('input[name="goods-edit-itemBrandId"]').attr("value", self.brandId);
     /*Editing Start*/
+    $('div.hidden-create-item').remove();
     $('div.hidden-edit-item').remove();
-    $('div.load-image-edit-content div.load-mainImage-content').empty();
-    $('div.load-image-edit-content div.load-otherImages-content').empty();
+    $('div.load-mainImage-content').empty();
+    $('div.load-otherImages-content').empty();
     /*Editing End*/
 
     let itemFileNames = [];
@@ -91,10 +91,6 @@ Item.prototype.init = function () {
                                   </div>
                                 </div>`);
     /*Editing End*/
-
-    $('.load-image-edit-content .goods-image-wrapper').on('click', (e) => {
-      ItemRelatives().itemChecking(e);
-    });
   });
 
   /*Editing Start*/
