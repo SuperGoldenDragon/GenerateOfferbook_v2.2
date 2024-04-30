@@ -8,12 +8,10 @@ const bntOpenOffer = $('.btn-open-offer');
 const btnCloseAllOffer = $('.btn-close-all-offers');
 const editBrandName = $('#input_brand_name');
 const btnChangeBrandName = $('#btn_change_brandname');
-/*Editing Start*/
 const mainImgContent = $('.load-image-content .load-mainImage-content');
 const otherImgContent = $('.load-image-content .load-otherImages-content');
 const mainEditImgContent = $('.load-image-edit-content .load-mainImage-content');
 const otherEditImgContent = $('.load-image-edit-content .load-otherImages-content');
-/*Editing End*/
 
 offersContainer.append('<div id="no-offer-alert">\
                           <div class="w3-panel w3-deep-purple">\
@@ -70,11 +68,9 @@ const Offerbook = (function () {
       });
     });
 
-    /*Editing Start*/
     $('a.btn-open-offer').on("click", function () {
       $('button.btn-open-offer').click();
     });
-    /*Editing End*/
 
     $('[data-bs-target="#create-new-offer"]').on("click", function () {
       setTimeout(function () {
@@ -109,7 +105,6 @@ const Offerbook = (function () {
           });
 
           const changeImageContent = $('#edit-current-item div.load-image-edit-content div.load-otherImages-content');
-          /*Editing Start*/
           /*Blocking : When reload the images, the old images are removed.*/
           if (filenames.length == 0) {
             return $.toast({
@@ -129,7 +124,6 @@ const Offerbook = (function () {
             // }
             ItemRelatives().renderFromImages(filenames, changeImageContent, false);
           }
-          /*Editing End*/
 
           filenames.map((filename, index) => {
             return modalFileNames.push(filename);
@@ -150,7 +144,6 @@ const Offerbook = (function () {
 
       electron.saveFileNames(filenames => {
         filenames = filenames;
-        /*Editing Start*/
         /*Blocking : When reload the images, the old images are removed.*/
         if (filenames.length > 0) {
           $('#btn-create-item').prop('disabled', false);
@@ -178,7 +171,6 @@ const Offerbook = (function () {
         //   ItemRelatives().renderFromImages(filenames, otherImgContent, false);
         // }
         ItemRelatives().renderFromImages(filenames, mainImgContent, true);
-        /*Editing End*/
 
         $('.load-image-content .goods-image-wrapper').on('mouseover', (e) => {
           ItemRelatives().itemChecking(e);
@@ -293,7 +285,6 @@ const Offerbook = (function () {
       electron.loadImages(null, null, "ITEM_CHANGE_MODE");
     });
 
-    /*Editing Start*/
     $('#btn-edit-item').on('click', function () {
       const goods_number = $('input[name="goods-edit-number"]').val();
       const goods_symbol = $('input[name="goods-edit-symbol"]').val();
@@ -320,7 +311,6 @@ const Offerbook = (function () {
     $('#close-edit-item-modal').on('click', function () {
       $('#edit-current-item').find('div.hidden-edit-item').remove();
     });
-    /*Editing End*/
 
     $(document).on("itemchange", function (e) {
       const { offerId } = e.detail;
@@ -333,18 +323,19 @@ const Offerbook = (function () {
    * @param {*} offername 
    * @returns 
    */
+
   const createNewOffer = function (offername) {
     if (!offername) {
       $('#no-offer-alert').show();
       return;
     }
+
     // if No offer alert is visible, toggle it
     $('#no-offer-alert').hide();
 
     const id = Date.now();
     offers[id] = new Offer(id, offername);
   };
-
 
   return {
     init: function () {
@@ -359,7 +350,6 @@ const Offerbook = (function () {
 $(() => {
   Offerbook.init();
 });
-
 
 /**
  * drag events

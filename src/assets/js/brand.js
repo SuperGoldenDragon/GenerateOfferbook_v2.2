@@ -50,13 +50,11 @@ Brand.prototype.init = function () {
   });
 
   self.offerContainer.find('button[data-bs-target="#create-new-item"]').on('click', function () {
-    /*Editing Start*/
     $('#btn-create-item').prop('disabled', true);
     $('div.load-mainImage-content').empty();
     $('div.load-otherImages-content').empty();
     $('div.hidden-create-item').remove();
     $('div.hidden-edit-item').remove();
-    /*Editing End*/
     $('input[name="goods-number"]').val("");
     $('input[name="goods-symbol"]').val("");
     $('input[name="goods-price"]').val("");
@@ -76,7 +74,6 @@ Brand.prototype.init = function () {
     }
   });
 
-  /*Editing Start*/
   $('div[data-brandid="' + self.id + '"] a.delete-all-item').on("click", function () {
     const ThisBrand = $(this).parent().parent().parent();
     const Items = ThisBrand.children().eq(1).children().eq(0).children();
@@ -132,18 +129,12 @@ Brand.prototype.init = function () {
       $('#change-brand-name button[data-bs-dismiss="modal"]').click();
     });
   });
-  /*Editing End*/
-
 };
 
-Brand.prototype.addNewItems = function (items) {
+Brand.prototype.addNewItems = function (items) { };
 
-};
-
-/*Editing Start*/
 Brand.prototype.updateBrandName = function (newName) {
   this.brandName = newName;
   $('li[data-brandid="' + this.id + '"] a').html(newName);
   $('div[data-brandid="' + this.id + '"] div div span').html(newName);
 };
-/*Editing End*/

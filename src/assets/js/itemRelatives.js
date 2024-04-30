@@ -1,4 +1,3 @@
-/*Editing Start*/
 var selectedChangeImageItem = null;
 try {
   electron.onChangedItemFilename(filename => {
@@ -36,11 +35,8 @@ try {
     }
   });
 } catch (e) { }
-/*Editing End*/
 
 const ItemRelatives = function () {
-
-  /*Editing Start*/
   const itemChecking = function (e) {
     $('.btn-select-item').off("click");
     $('.btn-select-item').on('click', function () {
@@ -117,7 +113,6 @@ const ItemRelatives = function () {
                             </div>`);
       }
     });
-    /*Editing End*/
   }
 
   return {

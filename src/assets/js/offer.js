@@ -15,7 +15,6 @@ const Offer = function (id, offername, isModified = true) {
 Offer.prototype.init = function () {
   const self = this;
   $('#no-offer-alert').hide();
-
   offersHeader.append('<li class="nav-item">\
                               <a class="nav-link" data-bs-toggle="tab" href="#' + self.id + '" data-offername="' + self.offername + '" data-offerid="' + self.id + '">' + self.offername + (self.isModified ? " *" : "") + '</a>\
                             </li>');
@@ -69,8 +68,6 @@ Offer.prototype.init = function () {
   const newContainer = $('#' + self.id);
   const inputNewBrandName = newContainer.find('.new-brand-name');
   const btnCreateNewBrand = newContainer.find('.btn-create-new-brand');
-
-  /*Editing Start*/
   const btnDeleteAllBrands = newContainer.find('.btn-delete-all-brands');
 
   btnDeleteAllBrands.on("click", function () {
@@ -90,7 +87,6 @@ Offer.prototype.init = function () {
       }
     });
   });
-  /*Editing End*/
 
   inputNewBrandName.on('input', function () {
     const value = $(this).val();
@@ -126,7 +122,6 @@ Offer.prototype.init = function () {
         });
         return;
       }
-
       $('a.nav-link[href="#' + self.id + '"]').html(`${newOffername} *`);
       $('#' + self.id).data('prefix', newPrefix);
       self.prefix = newPrefix;
@@ -137,7 +132,6 @@ Offer.prototype.init = function () {
     });
   });
 
-
   newContainer.find('a.btn_gen_pdf').on("click", function () {
     if (!newContainer.find('.item-block').length) {
       return $.toast({
@@ -147,7 +141,6 @@ Offer.prototype.init = function () {
         position: 'bottom-right',
       });
     }
-
     // save dialog
     try {
       electron.savePdfDialog(self.getOfferData());
@@ -165,14 +158,12 @@ Offer.prototype.init = function () {
         position: 'bottom-right'
       });
     }
-
     // save dialog
     try {
       electron.saveDocDialog(self.getOfferData());
     } catch (e) {
       console.log("Opening save dialog is failed. This is web mode.");
     }
-
   });
 
   newContainer.find('a.btn_save_offer').on("click", function (e) {
@@ -202,7 +193,6 @@ Offer.prototype.init = function () {
       self.close();
     }
   });
-
 };
 
 Offer.prototype.loadedItemImages = function (brandId, filenames) {

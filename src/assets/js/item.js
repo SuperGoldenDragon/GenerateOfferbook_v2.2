@@ -8,8 +8,6 @@ const Item = function (offerId, brandId, filenames, id = "", symbol = "", price 
   this.no = no;
   this.init();
 };
-
-
 Item.prototype.init = function () {
   const self = this;
   const brandContainer = $('div[data-brandid="' + self.brandId + '"] .item-blocks-container');
@@ -58,7 +56,6 @@ Item.prototype.init = function () {
     let no;
     let symbol;
     let price;
-
     no = $('[data-itemid="' + self.id + '"] input.item-number').val();
     symbol = $(`[data-itemid="${self.id}"] input.item-symbol`).val();
     price = $(`[data-itemid="${self.id}"] input.item-price`).val();
@@ -68,19 +65,16 @@ Item.prototype.init = function () {
     $('input[name="goods-edit-itemId"]').attr("value", self.id);
     $('input[name="goods-edit-itemOfferId"]').attr("value", self.offerId);
     $('input[name="goods-edit-itemBrandId"]').attr("value", self.brandId);
-    /*Editing Start*/
     $('div.hidden-create-item').remove();
     $('div.hidden-edit-item').remove();
     $('div.load-mainImage-content').empty();
     $('div.load-otherImages-content').empty();
-    /*Editing End*/
 
     let itemFileNames = [];
     $('[data-itemid="' + self.id + '"] .hidden-item-filename').each(function () {
       itemFileNames.push($(this).data('item-filename'));
     });
 
-    /*Editing Start*/
     var filename = itemFileNames[0];
     $('#btn-edit-item').prop('disabled', false);
     const changeImageContent = $('div.load-image-edit-content div.load-mainImage-content');
@@ -90,10 +84,8 @@ Item.prototype.init = function () {
                                     <div class="goods-image-wrapper main-image-border" style="background-image: url('${filename}');" data-src="${filename}"></div>
                                   </div>
                                 </div>`);
-    /*Editing End*/
   });
 
-  /*Editing Start*/
   $(`[data-itemid="${self.id}"] .delete-item`).on("click", function (e, obj) {
     const thisItem = $(this).parent().parent().parent();
     const thisItemId = thisItem.data('itemid');
@@ -118,7 +110,6 @@ Item.prototype.init = function () {
       }
     });
   });
-  /*Editing End*/
 
   newItemBlock.find("input.item-number").on("change", function () {
     const e = new CustomEvent("itemchange", { detail: { offerId: self.offerId, brandId: self.brandId, itemId: self.id } });
