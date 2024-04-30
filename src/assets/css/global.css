@@ -51,14 +51,6 @@ div.w3-third {
   border: 1px solid gray;
 }
 
-/* .goods-image-wrapper img.goods-image {
-  opacity: 1;
-  display: block;
-  width: 100%;
-  height: auto;
-  transition: .1s ease;
-} */
-
 .main-image-checked {
   position: absolute;
   top: 50%;
@@ -104,22 +96,10 @@ div.w3-third {
   margin: 1px; */
   width: 45%;
   margin: 2%;
+  opacity: 0;
 }
 
-/* ------------------------- Dragon's account infos ---------------------------
-G-Mail:
-jamesroydev@gmail.com
-YTs9J4qpOQBot3nWKqBF
-
-Github:
-jamesroydev@gmail.com
-YTs9J4qpOQBot3nWKqBF
-SuperGoldenDragon
-
-Outlook:
-goldendragon5789@outlook.com
-$$NomoneyNopain9875
-
-Skype:
-goldendragon5789@outlook.com
-$$NomoneyNopain9875 */
+.goods-image-wrapper:hover button {
+  opacity: 1;
+  transition: .3s ease;
+}

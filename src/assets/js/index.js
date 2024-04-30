@@ -135,7 +135,7 @@ const Offerbook = (function () {
             return modalFileNames.push(filename);
           });
 
-          $('.load-image-edit-content .goods-image-wrapper').on('click', (e) => {
+          $('.load-image-edit-content .goods-image-wrapper').on('mouseover', (e) => {
             ItemRelatives().itemChecking(e);
           });
 
@@ -180,7 +180,7 @@ const Offerbook = (function () {
         ItemRelatives().renderFromImages(filenames, mainImgContent, true);
         /*Editing End*/
 
-        $('.load-image-content .goods-image-wrapper').on('click', (e) => {
+        $('.load-image-content .goods-image-wrapper').on('mouseover', (e) => {
           ItemRelatives().itemChecking(e);
         });
       });
