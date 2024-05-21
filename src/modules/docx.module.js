@@ -1,5 +1,5 @@
 const fs = require('fs');
-const { Document, Packer, Paragraph, TextRun, ImageRun, Table, TableCell, TableRow, WidthType, Media, TableOfContents, File, StyleLevel, HeadingLevel, SectionType, HeightRule, ImageFit, TableRowHeight, VerticalAlign, PageBreak } = require('docx');
+const { Document, Packer, Paragraph, TextRun, ImageRun, Table, TableCell, TableRow, WidthType, Media, TableOfContents, File, StyleLevel, HeadingLevel, SectionType, HeightRule, ImageFit, TableRowHeight, VerticalAlign, PageBreak, Bookmark, InternalHyperlink } = require('docx');
 const { nativeImage, dialog } = require('electron');
 
 const DocxModule = () => {
@@ -9,6 +9,8 @@ const DocxModule = () => {
 
 
     const generateDocx = (productInfo, fileName) => {
+
+
         let resultProducts = [];
         let showResult = [];
         let doc = null;
@@ -16,7 +18,11 @@ const DocxModule = () => {
         let allTables = [];
         let tempTables = [];
 
+        const offerName = productInfo.name || fileName;
+
         productInfo.brands.forEach((brandObj) => {
+
+            const brandId = brandObj.brandId;
             const brand = brandObj.brandName;
 
             brandObj.items.forEach((item) => {
@@ -40,14 +46,50 @@ const DocxModule = () => {
                 tempTables.push(table);
             });
 
-            allTables.push({ brand, tempTables });
+            allTables.push({ brand, tempTables, brandId });
             tempTables = [];
             products = [];
 
         });
 
+        doc = new Document({
+            sections: [{
+                properties: {
+                    page: {
+                        margin: {
+                            top: 720, right: 720, bottom: 720, left: 720
+                        }
+                    }
+                },
+                children: [new Paragraph({
+                    alignment: "center",
+                    children: [new TextRun({
+                        text: offerName,
+                        size: 48
+                    })],
+                    spacing: {
+                        before: 48,
+                        after: 48
+                    }
+                })].concat(productInfo.brands.map((brand, index) => {
+                    const { brandId, brandName } = brand;
+                    return new Paragraph({
+                        children: [new InternalHyperlink({
+                            children: [new TextRun({
+                                text: `${index + 1}. ${brandName} (${brand.items?.length || 0})`,
+                                size: 36,
+                                color: "#0b57d0",
+
+                            })],
+                            anchor: brandId
+                        })]
+                    })
+                }))
+            }]
+        })
+
         allTables.forEach((byBrandObject, index) => {
-            const { brand, tempTables } = byBrandObject
+            const { brand, tempTables, brandId } = byBrandObject
             const data = tempTables.reduce((acc, val, i) => {
                 if (i % 2 === 0) {
                     acc.push([]);
@@ -69,10 +111,14 @@ const DocxModule = () => {
             showResult = [
                 new Paragraph({
                     alignment: 'center',
-                    children: [new TextRun({
-                        text: brand,
-                        size: 40,
-                    }),]
+                    children: [new Bookmark({
+                        id: brandId,
+                        children: [new TextRun({
+                            text: brand,
+                            size: 48,
+                            color: "#0000ff"
+                        })]
+                    })]
                 }),
                 new Table(result),
             ];
@@ -92,8 +138,7 @@ const DocxModule = () => {
                         children: showResult
                     }]
                 })
-            }
-            else {
+            } else {
                 doc.addSection({
                     properties: {
                         page: {
@@ -117,12 +162,6 @@ const DocxModule = () => {
             console.log(e);
             return false;
         }
-
-        // dialog.showMessageBox({
-        //     type: 'info',
-        //     title: 'Saved file info',
-        //     message: fileName + '.docx file has created successfully.',
-        // });
 
     }
 
@@ -230,8 +269,6 @@ const DocxModule = () => {
                 }),
             ],
         });
-
-
 
         return table
     }
