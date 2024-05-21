@@ -68,15 +68,15 @@ const DocxModule = () => {
                         size: 48
                     })],
                     spacing: {
-                        before: 48,
-                        after: 48
+                        before: 200,
+                        after: 200
                     }
                 })].concat(productInfo.brands.map((brand, index) => {
                     const { brandId, brandName } = brand;
                     return new Paragraph({
                         children: [new InternalHyperlink({
                             children: [new TextRun({
-                                text: `${index + 1}. ${brandName} (${brand.items?.length || 0})`,
+                                text: `${index + 1}.   ${brandName} (${brand.items?.length || 0})`,
                                 size: 36,
                                 color: "#0b57d0",
 
