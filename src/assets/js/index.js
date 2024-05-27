@@ -260,7 +260,7 @@ const Offerbook = (function () {
             position: 'top-right',
           });
         }
-        const { id, name, brands, prefix } = data;
+        const { id, name, brands, prefix, hiddenInputs } = data;
         if ($('#' + id).length) {
           return $.toast({
             heading: 'Opening Warning',
@@ -269,13 +269,14 @@ const Offerbook = (function () {
             position: 'top-right',
           });
         }
-        let openedOffer = new Offer(id, name, false);
+        let openedOffer = new Offer(id, name, false, hiddenInputs);
         openedOffer.updatePrefix(prefix);
+        openedOffer.setFilename(filename);
+        offers[id] = openedOffer;
         brands.forEach(function (brand) {
           openedOffer.addBrand(brand);
         });
-        openedOffer.setFilename(filename);
-        offers[id] = openedOffer;
+        // offers[id] = openedOffer;
       });
     } catch (e) {
       console.log("Load opened filenames is failed. web mode");

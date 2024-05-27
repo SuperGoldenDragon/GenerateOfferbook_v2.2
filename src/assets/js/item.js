@@ -15,6 +15,8 @@ Item.prototype.init = function () {
   const itemIndex = $('div[data-brandid="' + self.brandId + '"] .item-blocks-container div.item-block').length + 1;
   const offerPrefix = $('#' + self.offerId).data('prefix');
 
+  const offer = Offerbook.getOffer(self.offerId);
+
   brandContainer.append('<div class="col-md-3 item-block mt-2" data-itemid="' + self.id + '" ondragover="javascript:onDragAllow(event, this)" ondrop="javascript:onDrop(event, this)" ondragleave="javascript:onDragLeave(event, this)">\
                           <div class="card p-2">\
                             <div class="form-group mb-2">\
@@ -22,10 +24,10 @@ Item.prototype.init = function () {
                             </div>\
                             <div class="item-img" draggable="true" ondragstart="javascript:onDragStarter(event)"></div>\
                             <div class="form-group mt-2">\
-                                <input type="text" class="form-control item-symbol" placeholder="Symbol: ">\
+                                <input type="text" class="form-control item-symbol" placeholder="Symbol: " >\
                             </div>\
                             <div class="form-group mt-2">\
-                                <input type="text" class="form-control item-price" placeholder="Price: ">\
+                                <input type="text" class="form-control item-price" placeholder="Price: " >\
                             </div>\
                             <div class="d-flex justify-content-end mt-3">\
                                 <a href="javascript:" class="me-3" data-bs-toggle="modal" data-bs-target="#edit-current-item">View detail</a>\
@@ -35,6 +37,10 @@ Item.prototype.init = function () {
                       </div>');
 
   const newItemBlock = $('[data-itemid="' + self.id + '"]');
+  console.log(offer);
+  (offer?.hiddenInputs || []).forEach((key) => {
+    newItemBlock.find(`input.item-${key}`).prop('hidden', true);
+  });
 
   $('[data-itemid="' + self.id + '"] .item-img').css('background-image', 'url(' + self.filenames[0].replaceAll("\\", "\/") + ')');
   self.filenames.forEach(function (filename) {

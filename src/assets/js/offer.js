@@ -2,13 +2,14 @@ const btnSaveOfferSetting = $('#btn_save_offer_setting');
 const inputUpdateOfferName = $('#update_offer_name');
 const inputUpdatePrefix = $('#prefix_item_number');
 
-const Offer = function (id, offername, isModified = true) {
+const Offer = function (id, offername, isModified = true, hiddenInputs = []) {
   this.id = id || Date.now();
   this.offername = offername;
   this.container = $('#' + id);
   this.prefix = 0;
   this.isModified = isModified;
   this.filename = null;
+  this.hiddenInputs = hiddenInputs;
   this.init();
 }
 
@@ -61,6 +62,32 @@ Offer.prototype.init = function () {
   $('[href="#' + self.id + '"]').addClass("active");
   $('#' + self.id).addClass("active");
 
+  const activateOffer = () => {
+    $('[name="check_hidden_input"]').prop('checked', false);
+    $(`#${self.id} .item-block input`).prop('hidden', false);
+    // hide create and edit item dialog
+    $('#edit-current-item input[name]').prop('hidden', false);
+    $('#create-new-item input[name]').prop('hidden', false);
+
+    self.hiddenInputs.forEach((key) => {
+      // hide inputs of item block
+      $(`#${self.id} input.item-${key}`).prop('hidden', true);
+      // hide create and edit item dialog
+      $(`[name="goods-${key}"]`).prop('hidden', true);
+      $(`[name="goods-edit-${key}"]`).prop('hidden', true);
+
+      $('[name="check_hidden_input"][value="' + key + '"]').prop('checked', true);
+    });
+  }
+
+  // when this offer is activated
+  $('[href="#' + self.id + '"]').on("click", () => {
+    activateOffer();
+  });
+
+  activateOffer();
+
+
   // update container  
   self.container = $('#' + self.id);
 
@@ -109,6 +136,11 @@ Offer.prototype.init = function () {
   newContainer.find('[data-bs-target="#setting-offer"]').on("click", function () {
     inputUpdateOfferName.val(self.offername);
     inputUpdatePrefix.val(self.prefix);
+    // uncheck all checkbox for hidden inputs
+    $('[name="check_hidden_input"]').prop("checked", false);
+    self.hiddenInputs.forEach(key => {
+      $('[name="check_hidden_input"][value="' + key + '"]').prop("checked", true);
+    });
     btnSaveOfferSetting.off("click");
     btnSaveOfferSetting.on("click", function () {
       const newOffername = inputUpdateOfferName.val();
@@ -129,6 +161,18 @@ Offer.prototype.init = function () {
       // update number of items
       self.updateNumbers();
       self.setModified(true);
+      self.hiddenInputs = [];
+      $('[name="check_hidden_input"]').each((index, obj) => {
+        const key = $(obj).val();
+        if ($(obj).prop('checked')) {
+          self.hiddenInputs.push(key);
+        }
+        // hide inputs of item block
+        $(`#${self.id} input.item-${key}`).prop('hidden', $(obj).prop('checked'));
+        // hide create and edit item dialog
+        $(`[name="goods-${key}"]`).prop('hidden', $(obj).prop('checked'));
+        $(`[name="goods-edit-${key}"]`).prop('hidden', $(obj).prop('checked'));
+      });
     });
   });
 
@@ -224,7 +268,8 @@ Offer.prototype.getOfferData = function () {
     id: self.id,
     name: self.offername,
     prefix: self.prefix,
-    brands: []
+    brands: [],
+    hiddenInputs: self.hiddenInputs
   };
   let brand = {};
   self.container.find('li[data-brandid]').each(function () {
