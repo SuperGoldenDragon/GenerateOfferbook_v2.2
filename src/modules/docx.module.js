@@ -42,7 +42,7 @@ const DocxModule = () => {
             });
 
             products.forEach((product) => {
-                let table = getProductContent(product);
+                let table = getProductContent(product, productInfo.hiddenInputs || []);
                 tempTables.push(table);
             });
 
@@ -165,7 +165,7 @@ const DocxModule = () => {
 
     }
 
-    const getProductContent = (individualProductInfo) => {
+    const getProductContent = (individualProductInfo, hiddenInputs = []) => {
 
         const tempImage = nativeImage.createFromPath(individualProductInfo.imagePath);
         const size = tempImage.getSize();
@@ -193,81 +193,84 @@ const DocxModule = () => {
             }
         });
 
-
-        let table = new Table({
-            rows: [
-                new TableRow({
-                    children: [
-                        new TableCell({
-                            verticalAlign: VerticalAlign.CENTER,
-                            width: {
-                                size: defaultImageCellWidth,
-                                type: WidthType.DXA
-                            },
-                            children: [new Paragraph({
-                                alignment: 'center',
-                                children: [image]
-                            })
-                            ],
-                        }),
-                    ],
-                    height: {
-                        value: defaultImageCellHeight,
-                        rule: 'exact'
+        let rows = [new TableRow({
+            children: [
+                new TableCell({
+                    verticalAlign: VerticalAlign.CENTER,
+                    width: {
+                        size: defaultImageCellWidth,
+                        type: WidthType.DXA
                     },
-                }),
-                new TableRow({
-                    children: [
-                        new TableCell({
-                            width: {
-                                size: defaultImageCellWidth,
-                            },
-                            children: [new Paragraph({
-                                alignment: 'center',
-                                children: [new TextRun({ text: individualProductInfo.no, size: 30 })]
-                            })],
-                        }),
+                    children: [new Paragraph({
+                        alignment: 'center',
+                        children: [image]
+                    })
                     ],
-                    height: {
-                        value: textHeight,
-                        rule: 'exact'
-                    }
-                }),
-                new TableRow({
-                    children: [
-                        new TableCell({
-                            width: {
-                                size: defaultImageCellWidth,
-                            },
-                            children: [new Paragraph({
-                                alignment: 'center',
-                                children: [new TextRun({ text: individualProductInfo.symbol, size: 30 })]
-                            })],
-                        }),
-                    ],
-                    height: {
-                        value: textHeight,
-                        rule: 'exact'
-                    }
-                }),
-                new TableRow({
-                    children: [
-                        new TableCell({
-                            width: {
-                                size: 3,
-                            },
-                            children: [new Paragraph({
-                                alignment: 'center',
-                                children: [new TextRun({ text: individualProductInfo.price, size: 30 })]
-                            })],
-                        }),
-                    ],
-                    height: {
-                        value: textHeight,
-                        rule: 'exact'
-                    }
                 }),
             ],
+            height: {
+                value: defaultImageCellHeight,
+                rule: 'exact'
+            },
+        }),
+        new TableRow({
+            children: [
+                new TableCell({
+                    width: {
+                        size: defaultImageCellWidth,
+                    },
+                    children: [new Paragraph({
+                        alignment: 'center',
+                        children: [new TextRun({ text: individualProductInfo.no, size: 30 })]
+                    })],
+                }),
+            ],
+            height: {
+                value: textHeight,
+                rule: 'exact'
+            }
+        })];
+
+        if (hiddenInputs.indexOf("symbol") < 0) {
+            rows.push(new TableRow({
+                children: [
+                    new TableCell({
+                        width: {
+                            size: defaultImageCellWidth,
+                        },
+                        children: [new Paragraph({
+                            alignment: 'center',
+                            children: [new TextRun({ text: individualProductInfo.symbol, size: 30 })]
+                        })],
+                    }),
+                ],
+                height: {
+                    value: textHeight,
+                    rule: 'exact'
+                }
+            }));
+        }
+        if (hiddenInputs.indexOf("price") < 0) {
+            rows.push(new TableRow({
+                children: [
+                    new TableCell({
+                        width: {
+                            size: 3,
+                        },
+                        children: [new Paragraph({
+                            alignment: 'center',
+                            children: [new TextRun({ text: individualProductInfo.price, size: 30 })]
+                        })],
+                    }),
+                ],
+                height: {
+                    value: textHeight,
+                    rule: 'exact'
+                }
+            }));
+        }
+        let table = new Table({
+            rows
         });
 
         return table
