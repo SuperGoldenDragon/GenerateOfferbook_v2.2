@@ -1,7 +1,8 @@
 
-const Brand = function (offerId, brandName, brandId) {
+const Brand = function (offerId, brandName, brandId, brandImagePath = "") {
   this.id = brandId || Date.now();
   this.offerId = offerId;
+  this.brandImagePath = brandImagePath
   this.brandName = brandName;
   this.offerContainer = $('#' + offerId);
   this.init();
@@ -24,9 +25,17 @@ Brand.prototype.init = function () {
                                                     <a href="javascript:" class="d-block">' + self.brandName + '</a>\
                                                   </li>');
   self.offerContainer.find('.items-container').append('<div class="mb-4" data-brandid="' + self.id + '">\
-                                                        <div class="d-flex justify-content-between mb-3">\
+                                                        <div class="d-flex justify-content-center mb-2">\
+                                                          <span class="h1">' + self.brandName + '</span>\
+                                                        </div>\
+                                                        <div class="d-flex justify-content-center mb-3">\
+                                                          <img src="' + self.brandImagePath + '" ' + (self.brandImagePath?'':'hidden') + ' class="brand-image" alt="' + self.brandName + '" height="80">\
+                                                        </div>\
+                                                        <div class="d-flex justify-content-center mb-3">\
+                                                          <a href="javascript:" class="btn-load-brandimage">Load brand image</a>\
+                                                        </div>\
+                                                        <div class="d-flex justify-content-between mb-3 align-content-center">\
                                                           <div>\
-                                                            <span class="h1 me-4">' + self.brandName + '</span>\
                                                             <a href="javascript:" class="me-2 btn-import-item-images">Import new images</a>\
                                                             <a href="javascript:" class="me-2 delete-all-item">Delete all items</a>\
                                                             <a href="javascript:" class="me-2 delete-this-brand">Delete this brand</a>\
@@ -129,6 +138,27 @@ Brand.prototype.init = function () {
       $('#change-brand-name button[data-bs-dismiss="modal"]').click();
     });
   });
+
+  $('div[data-brandid="' + self.id + '"] a.btn-load-brandimage').on("click", function() {
+    try {
+      electron.loadBrandImage(self.offerId, self.id)
+    } catch(e) {
+      console.log(e)
+    }
+  })
+
+  try {
+    electron.onLoadBrandImage((args) => {
+      const { filename, offerId, brandId } = args
+      if(offerId == this.offerId && brandId == this.id) {
+        this.brandImagePath = filename
+        $('div[data-brandid="' + self.id + '"] img.brand-image').attr('src', filename)
+        $('div[data-brandid="' + self.id + '"] img.brand-image').prop('hidden', false)
+      }
+    })
+  } catch (e) {
+    console.log(e)
+  }
 };
 
 Brand.prototype.addNewItems = function (items) { };

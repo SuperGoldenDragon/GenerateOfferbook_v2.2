@@ -24,6 +24,7 @@ const DocxModule = () => {
 
             const brandId = brandObj.brandId;
             const brand = brandObj.brandName;
+            const brandImagePath = brandObj.brandImagePath
 
             brandObj.items.forEach((item) => {
                 const no = item.no;
@@ -46,7 +47,7 @@ const DocxModule = () => {
                 tempTables.push(table);
             });
 
-            allTables.push({ brand, tempTables, brandId });
+            allTables.push({ brand, tempTables, brandId, brandImagePath });
             tempTables = [];
             products = [];
 
@@ -88,7 +89,7 @@ const DocxModule = () => {
         })
 
         allTables.forEach((byBrandObject, index) => {
-            const { brand, tempTables, brandId } = byBrandObject
+            const { brand, tempTables, brandId, brandImagePath } = byBrandObject
             const data = tempTables.reduce((acc, val, i) => {
                 if (i % 2 === 0) {
                     acc.push([]);
@@ -107,6 +108,16 @@ const DocxModule = () => {
                     })
                 )),
             };
+            let brandImageWidth = 50, brandImageHeight = 50
+            if(brandImagePath) {
+                try {
+                    const size = brandImageWidth.getSize();
+                    brandImageWidth = brandImageHeight * size.width / size.height
+                } catch (e) {
+                    brandImage = nativeImage.createFromPath(brandImagePath)
+                }                
+            }
+            
             showResult = [
                 new Paragraph({
                     alignment: 'center',
@@ -119,6 +130,16 @@ const DocxModule = () => {
                         })]
                     })],
                     heading: HeadingLevel.HEADING_1
+                }),
+                new Paragraph({
+                    alignment: 'center',
+                    children: [].concat(brandImagePath?[new ImageRun({
+                        data : fs.readFileSync(brandImagePath),
+                        transformation : {
+                            width : brandImageWidth,
+                            height: brandImageHeight
+                        }
+                    })]:[])
                 }),
                 new Table(result),
             ];

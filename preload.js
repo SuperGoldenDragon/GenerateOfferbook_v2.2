@@ -59,5 +59,13 @@ contextBridge.exposeInMainWorld('electron', {
     ipcRenderer.on("change_item_image_filename", (e, filename) => {
       callback(filename);
     });
+  },
+  loadBrandImage: (offerId, brandId) => {
+    ipcRenderer.invoke("open_brand_image", { offerId, brandId })
+  },
+  onLoadBrandImage: (callback) => {
+    ipcRenderer.on('selected_brandimage', (e, args) => {
+      callback(args)
+    })
   }
 });

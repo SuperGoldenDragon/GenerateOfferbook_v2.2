@@ -291,6 +291,7 @@ Offer.prototype.getOfferData = function () {
       });
       brand.items.push({ itemId, no, symbol, price, filenames });
     });
+    brand['brandImagePath'] = $('div[data-brandid="' + brand.brandId + '"] img.brand-image').attr('src')
     offerData.brands.push(brand);
   });
   return offerData;
@@ -302,8 +303,8 @@ Offer.prototype.updatePrefix = function (newPrefix) {
 
 Offer.prototype.addBrand = function (brand) {
   const self = this;
-  const { brandId, brandIndex, brandName, items } = brand;
-  new Brand(this.id, brandName, brandId);
+  const { brandId, brandIndex, brandName, items, brandImagePath } = brand;
+  new Brand(this.id, brandName, brandId, brandImagePath);
   items.forEach(function (item) {
     new Item(self.id, brandId, item.filenames, item.itemId, item.symbol, item.price, item.no);
   });

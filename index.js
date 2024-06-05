@@ -96,6 +96,21 @@ function createWindow() {
     e.sender.send("generated_obs", ObsModule.save(filename, data), filename);
   });
 
+  ipcMain.handle('open_brand_image', (e, args) => {
+    const config = {
+      title: 'Select brand image files.',
+      buttonLabel: 'Select',
+      filters: [{
+        name: "Image files", extensions: ["jpg", "jpeg", "png"]
+      }],
+      properties: ['openFile']
+    };
+    const filenames = dialog.showOpenDialogSync(win, config) || [];
+    if(filenames && filenames[0]) {
+      e.sender.send("selected_brandimage", {...args, filename: filenames[0]})
+    }
+  })
+
   ipcMain.handle("open_offer_dialog", (e) => {
     const config = {
       title: 'Select Offerbook script file.',
