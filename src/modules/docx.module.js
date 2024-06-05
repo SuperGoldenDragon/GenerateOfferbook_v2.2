@@ -79,7 +79,6 @@ const DocxModule = () => {
                                 text: `${index + 1}.   ${brandName} (${brand.items?.length || 0})`,
                                 size: 36,
                                 color: "#0b57d0",
-
                             })],
                             anchor: brandId
                         })]
@@ -118,11 +117,12 @@ const DocxModule = () => {
                             size: 48,
                             color: "#0000ff"
                         })]
-                    })]
+                    })],
+                    heading: HeadingLevel.HEADING_1
                 }),
                 new Table(result),
             ];
-            resultProducts.push(new Paragraph({ text: brand, size: 20 }))
+            resultProducts.push(new Paragraph({ text: brand, size: 20, }))
             resultProducts.push(new Table(result))
 
             if (doc == null) {

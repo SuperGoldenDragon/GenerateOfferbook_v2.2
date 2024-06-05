@@ -75,6 +75,7 @@ function createWindow() {
       ]
     };
     const filename = dialog.showSaveDialogSync(config);
+    if(!filename) return ;
     const docResult = DocxModule.generate(data, filename);
     e.sender.send("generated_doc", docResult);
   });
