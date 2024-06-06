@@ -260,7 +260,7 @@ const Offerbook = (function () {
             position: 'top-right',
           });
         }
-        const { id, name, brands, prefix, hiddenInputs } = data;
+        const { id, name, brands, prefix, hiddenInputs, fontSize } = data;
         if ($('#' + id).length) {
           return $.toast({
             heading: 'Opening Warning',
@@ -269,7 +269,7 @@ const Offerbook = (function () {
             position: 'top-right',
           });
         }
-        let openedOffer = new Offer(id, name, false, hiddenInputs);
+        let openedOffer = new Offer(id, name, false, hiddenInputs, fontSize);
         openedOffer.updatePrefix(prefix);
         openedOffer.setFilename(filename);
         offers[id] = openedOffer;

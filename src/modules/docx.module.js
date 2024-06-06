@@ -18,6 +18,8 @@ const DocxModule = () => {
         let allTables = [];
         let tempTables = [];
 
+        const { fontSize } = productInfo;
+
         const offerName = productInfo.name || fileName;
 
         productInfo.brands.forEach((brandObj) => {
@@ -43,7 +45,7 @@ const DocxModule = () => {
             });
 
             products.forEach((product) => {
-                let table = getProductContent(product, productInfo.hiddenInputs || []);
+                let table = getProductContent(product, productInfo.hiddenInputs || [], fontSize);
                 tempTables.push(table);
             });
 
@@ -186,7 +188,7 @@ const DocxModule = () => {
 
     }
 
-    const getProductContent = (individualProductInfo, hiddenInputs = []) => {
+    const getProductContent = (individualProductInfo, hiddenInputs = [], fontSize = 10) => {
 
         const tempImage = nativeImage.createFromPath(individualProductInfo.imagePath);
         const size = tempImage.getSize();
@@ -242,7 +244,7 @@ const DocxModule = () => {
                     },
                     children: [new Paragraph({
                         alignment: 'center',
-                        children: [new TextRun({ text: individualProductInfo.no, size: 30 })]
+                        children: [new TextRun({ text: individualProductInfo.no, size: fontSize * 2 })]
                     })],
                 }),
             ],
@@ -261,7 +263,7 @@ const DocxModule = () => {
                         },
                         children: [new Paragraph({
                             alignment: 'center',
-                            children: [new TextRun({ text: individualProductInfo.symbol, size: 30 })]
+                            children: [new TextRun({ text: individualProductInfo.symbol, size: fontSize * 2 })]
                         })],
                     }),
                 ],
@@ -280,7 +282,7 @@ const DocxModule = () => {
                         },
                         children: [new Paragraph({
                             alignment: 'center',
-                            children: [new TextRun({ text: individualProductInfo.price, size: 30 })]
+                            children: [new TextRun({ text: individualProductInfo.price, size: fontSize * 2 })]
                         })],
                     }),
                 ],

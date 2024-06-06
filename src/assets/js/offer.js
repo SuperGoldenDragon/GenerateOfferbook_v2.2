@@ -1,8 +1,9 @@
 const btnSaveOfferSetting = $('#btn_save_offer_setting');
 const inputUpdateOfferName = $('#update_offer_name');
 const inputUpdatePrefix = $('#prefix_item_number');
+const selectFontSize = $('#select_font_size');
 
-const Offer = function (id, offername, isModified = true, hiddenInputs = []) {
+const Offer = function (id, offername, isModified = true, hiddenInputs = [], fontSize = 10) {
   this.id = id || Date.now();
   this.offername = offername;
   this.container = $('#' + id);
@@ -10,6 +11,7 @@ const Offer = function (id, offername, isModified = true, hiddenInputs = []) {
   this.isModified = isModified;
   this.filename = null;
   this.hiddenInputs = hiddenInputs;
+  this.fontSize = fontSize;
   this.init();
 }
 
@@ -78,6 +80,8 @@ Offer.prototype.init = function () {
 
       $('[name="check_hidden_input"][value="' + key + '"]').prop('checked', true);
     });
+
+    selectFontSize.val(self.fontSize)
   }
 
   // when this offer is activated
@@ -173,6 +177,8 @@ Offer.prototype.init = function () {
         $(`[name="goods-${key}"]`).prop('hidden', $(obj).prop('checked'));
         $(`[name="goods-edit-${key}"]`).prop('hidden', $(obj).prop('checked'));
       });
+      // update font size
+      self.fontSize = parseInt(selectFontSize.val());
     });
   });
 
@@ -269,7 +275,8 @@ Offer.prototype.getOfferData = function () {
     name: self.offername,
     prefix: self.prefix,
     brands: [],
-    hiddenInputs: self.hiddenInputs
+    hiddenInputs: self.hiddenInputs,
+    fontSize: self.fontSize
   };
   let brand = {};
   self.container.find('li[data-brandid]').each(function () {
